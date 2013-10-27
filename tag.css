@@ -1,0 +1,38 @@
+#review_question_container {
+    margin:20px;
+    border:solid #FFA080 1px;
+}
+
+.review_question {
+    position:relative;
+    padding:10px;
+}
+
+.review_question .delete {
+    position:absolute;
+    top:7px;
+    right:7px;
+    width:20px;
+    height:20px;
+    cursor:pointer;
+}
+
+.hoverable:hover {
+    z-index:999;
+    -moz-box-shadow: 0px 0px #2CFF00;
+    -webkit-box-shadow: 0px 0px #2CFF00;
+    box-shadow: 0px 0px 15px #2CFF00;
+    cursor:pointer;
+}
+
+.highlighted {
+    background-color:#FFA080;
+}
+
+.answer_list {
+    list-style:none;
+}
+
+.details {
+    font-size:80%;
+}

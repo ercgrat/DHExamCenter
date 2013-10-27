@@ -1,0 +1,25 @@
+div.question_list {
+    margin-left:10px;
+}
+
+div.question_body, ul.answer_list {
+    margin-left:20px;
+}
+
+ul.answer_list {
+    list-style:none;
+    padding:0px;
+}
+
+ul.answer_list li {
+    margin:4px;
+}
+
+sub.resource {
+    font-size:70%;
+}
+
+sub.resource a {
+    color:black;
+    text-decoration:none;
+}

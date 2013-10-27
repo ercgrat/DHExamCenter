@@ -1,0 +1,9 @@
+
+#question_form
+{
+    margin-left:40px;
+}
+
+#answer_list label, #answer_list input {
+    display:inline-block;
+}

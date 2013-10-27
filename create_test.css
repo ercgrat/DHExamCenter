@@ -1,0 +1,22 @@
+.question_head * {
+    display:block;
+    margin:0;
+    padding:0;
+}
+.question_head .warning {
+    margin:10px;
+}
+.question_head input {
+    margin-left:5px;
+}
+.answer_list {
+    padding:5px;
+    margin-left:10px;
+}
+#questions
+{
+    margin-left:40px;
+}
+.q_adder, .q_remover, .a_adder, .a_remover {
+    cursor:pointer;
+}

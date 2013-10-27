@@ -1,0 +1,18 @@
+ul.correction_list {
+    margin-left:30px;
+}
+
+li.selected {
+    
+}
+li.unselected {
+    list-style:none;
+}
+
+div.question_body {
+    position:relative;
+}
+img.correction {
+    position:absolute;
+    left:15px;
+}

@@ -1,0 +1,26 @@
+div.question_body {
+    margin:20px;
+    margin-left:100px;
+}
+div.question_head {
+    position:relative;
+}
+div.question_head img {
+    position:absolute;
+    left:-30px;
+}
+ul.question {
+    list-style:none;
+    position:relative;
+}
+ul.question li img {
+    position:absolute;
+    width:18px;
+    left:5px;
+}
+
+li.incorrect span, li.correct span {
+    padding:0px 3px 0px 3px;
+    border:solid black 1px;
+    border-radius:40px;
+}
