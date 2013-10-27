@@ -100,7 +100,10 @@ for($i = 0; $i < $num_questions; $i++)
         $answer_results_query->bind_param("isii", $_SESSION["user"]->id, $date, $answerid, $in_array);
         $answer_results_query->execute();
     }
-    $question_string .= "</ul><p>Explanation: $explanation</p></div>";
+    
+    $question_string .= "</ul>";
+    if(strlen($explanation) > 0) { $question_string .= "<p>Explanation: $explanation</p>"; }
+    $question_string .= "</div>";
     if($correct_tally == 0) { $evaluation_string .= "<ul class='correction_list'>"; }
     else { $evaluation_string .= "<ul class='correction_list'>"; }
     $evaluation_string .= $question_string;

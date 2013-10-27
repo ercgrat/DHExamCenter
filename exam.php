@@ -182,8 +182,10 @@ function display_question($questionid, $q_index)
         $answers_arr = $_SESSION["exam-answers"][$question_count - 1];
     }
 
-    if($correct_count > 1) { $input_type = "checkbox"; }
-    else { $input_type = "radio"; }
+    //if($correct_count > 1) {
+    $input_type = "checkbox";
+    //}
+    //else { $input_type = "radio"; }
     
     echo "<ul class='answer_list'>";
     for($i= 0; $i < count($answers_arr); $i++)
