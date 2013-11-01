@@ -162,3 +162,10 @@ td {
 .implied_link:hover {
     text-decoration:underline;
 }
+
+.unavailable {
+    margin:auto;
+    display:table-cell;
+    width:400px;
+    padding:60px;
+}

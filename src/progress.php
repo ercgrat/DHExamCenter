@@ -13,6 +13,6 @@ if(!$_SESSION['user']->logged_in)
 }
 
 output_start("", $_SESSION['user']);
-echo "<p>This feature of XLearn is under construction.</p>";
+echo "<p>This feature of XLearn is under construction.</p><img class='unavailable' src='unavailable.jpg' alt=''/>";
 output_end();
 ?>
