@@ -9,10 +9,20 @@ li.unselected {
     list-style:none;
 }
 
+h3.question_header {
+    display:inline;
+    margin:0 0 0 15px;
+}
+
 div.question_body {
     position:relative;
 }
 img.correction {
     position:absolute;
     left:15px;
+}
+img.correction_indicator {
+    position:absolute;
+    width:17px;
+    left:-5px;
 }

@@ -145,7 +145,7 @@ function display_question($questionid, $q_index)
     $question_query->fetch();
     
     echo "<h3>Question $question_count</h3>";
-    echo "<div class='question_body'><p>".htmlentities($question_text);
+    echo "<div class='question_body'><p>".string_with_space_preserved($question_text);
     if(isset($resourceid))
     {
         $resource_query = $db_handle->prepare("SELECT esourcenameray, inklay FROM esourcesray WHERE esourceidray = ?");
@@ -170,7 +170,7 @@ function display_question($questionid, $q_index)
         $answers_arr = array(); // Create temporary array of answer rows to shuffle.
         while($answer_query->fetch())
         {
-            $row = array($answerid, htmlentities($answer_text));
+            $row = array($answerid, string_with_space_preserved($answer_text));
             array_push($answers_arr, $row);
             $correct_count += $correct;
         }

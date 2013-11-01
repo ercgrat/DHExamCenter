@@ -9,7 +9,7 @@ function output_start($header, $user)
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
-            <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+            <meta http-equiv="Content-Type" content="text/html;charset=utf-16"/>
             <title>DH eXam Center</title>
             <link rel="stylesheet" type="text/css" href="index.css"/>
             <script type="text/javascript" src="layout.js"></script>
@@ -95,5 +95,40 @@ function save_log($log_string)
     $log_query = $db_handle->prepare("INSERT INTO error_logs(log) VALUES(?)");
     $log_query->bind_param("s", $log_string);
     $log_query->execute();
+}
+
+function string_with_space_preserved($str)
+{
+    $str = htmlentities($str);
+    $output = "";
+    for($i = 0; $i < strlen($str); $i++)
+    {
+        if($str{$i} == " ")
+        {
+            $count = 1;
+            for($j = $i + 1; $j < strlen($str); $j++)
+            {
+                if($str{$j} == " ") { $count++; }
+                else { break; }
+            }
+            if($count > 1)
+            {
+                for($s = 0; $s < $count; $s++)
+                {
+                    $output .= "&nbsp";
+                }
+                $i = $j-1;
+            }
+            else
+            {
+                $output .= " ";
+            }
+        }
+        else
+        {
+            $output .= $str{$i};
+        }
+    }
+    return nl2br($output);
 }
 ?>

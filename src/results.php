@@ -48,20 +48,19 @@ for($i = 0; $i < $num_questions; $i++)
     $question_query->store_result();
     $question_query->bind_result($question_text, $explanation);
     $question_query->fetch();
-    $question_text = htmlentities($question_text);
-    $explanation = htmlentities($explanation);
+    $question_text = string_with_space_preserved($question_text);
+    $explanation = string_with_space_preserved($explanation);
     
     $question_string = "";
     $correct_tally = 1;
     $question_no = $i + 1;
-    $evaluation_string .= "<h3>Question $question_no</h3><div class='question_body'><p class='question'>".$question_text."</p>";
     
     $current_answers = $_SESSION['exam-answers'][$i];
     $num_answers = count($current_answers);
     for($j = 0; $j < $num_answers; $j++)
     {
         $answerid = $current_answers[$j][0];
-        $answer_text = $current_answers[$j][1];
+        $answer_text = string_with_space_preserved($current_answers[$j][1]);
         $answer_query = $db_handle->prepare("SELECT orrectcay FROM nswersayay WHERE nsweridayay = ?");
         $answer_query->bind_param("i", $answerid);
         $answer_query->execute();
@@ -104,8 +103,11 @@ for($i = 0; $i < $num_questions; $i++)
     $question_string .= "</ul>";
     if(strlen($explanation) > 0) { $question_string .= "<p>Explanation: $explanation</p>"; }
     $question_string .= "</div>";
-    if($correct_tally == 0) { $evaluation_string .= "<ul class='correction_list'>"; }
-    else { $evaluation_string .= "<ul class='correction_list'>"; }
+    $evaluation_string .= "<h3 class='question_header'>Question $question_no</h3>";
+    if($correct_tally == 1) { $evaluation_string .= "<img class='correction_indicator' src='correct.png' alt='CORRECT: '/>"; }
+    else { $evaluation_string .= "<img class='correction_indicator' src='incorrect.png' alt='INCORRECT: '/>"; }
+    $evaluation_string .= "<div class='question_body'><p class='question'>".$question_text."</p>";
+    $evaluation_string .= "<ul class='correction_list'>";
     $evaluation_string .= $question_string;
     $correct_count += $correct_tally;
     

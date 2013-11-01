@@ -87,7 +87,7 @@ while($id_query->fetch())
     $question_query->store_result();
     $question_query->bind_result($question_text, $order, $resourceid, $explanation);
     $question_query->fetch();
-    $question_text = nl2br(htmlentities($question_text));
+    $question_text = string_with_space_preserved($question_text);
     echo "<p>QUESTION: $question_text</p>";
     
     $tags_query = $db_handle->prepare("SELECT agidtay FROM aglinkstay WHERE uestionidquay = ?");
@@ -135,7 +135,7 @@ while($id_query->fetch())
     $answer_query->bind_result($answer_text, $correct);
     while ($answer_query->fetch())
     {
-        $answer_text = nl2br(htmlentities($answer_text));
+        $answer_text = string_with_space_preserved($answer_text);
         if($correct == 1)
         {
             $img = "<img src='correct.png' alt='RIGHT: '/>";
@@ -148,7 +148,7 @@ while($id_query->fetch())
     }
     echo "</ul>";
     
-    $explanation = nl2br(htmlentities($explanation));
+    $explanation = string_with_space_preserved($explanation);
     echo "<p>EXPLANATION: $explanation</p>";
     
     echo "</div>";
