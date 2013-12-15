@@ -66,10 +66,10 @@ require_once "class-fragment-pending_student_table.php";
 echo <<<_STUDENT
     </div>
     <hr/>
-    <h3>Add a Student</h3>
+    <h3>Invite a Student</h3>
     <form id="student_form">
         <table>
-            <tr><td>Student Account Name: </td> <td><input id="student_account_name" name="account" type="text" size="40" maxlength="32"/><span class="warning"></span></td></tr>
+            <tr><td>Student Account Name: </td> <td><input id="student_account_name" name="account" type="text" size="40" maxlength="32"/><span class="warning"></span><span class="note"> (Used for identification during student account registration.)</span></td></tr>
         </table>
     </form>
     <div>

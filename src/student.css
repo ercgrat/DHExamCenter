@@ -5,6 +5,7 @@ table {
     border-spacing:5px;
 }
 td {
-    border:2px solid gray;
+    border:2px solid;
+    border-color:gray;
     padding:4px;
 }

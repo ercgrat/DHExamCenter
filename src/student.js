@@ -9,6 +9,7 @@ function student_init ()
         for(var j = 0; j < tag_items.length; j++)
         {
             tag_items[j].onclick = select_item;
+            tag_items[j].style.borderColor = "#808080";
         }
     }
 }
@@ -17,11 +18,11 @@ function select_item ()
 {
     var data_cell = this;
     var tagid = data_cell.firstElementChild.value;
-    var borderColor = window.getComputedStyle(data_cell).getPropertyValue('border-color');
+    borderColor = data_cell.style.borderColor;
     var table = this.parentNode.parentNode.parentNode;
     var form = table.parentNode;
     
-    if(borderColor == "rgb(128, 128, 128)")
+    if(borderColor == "#808080" || borderColor == "rgb(128, 128, 128)")
     {
         data_cell.style.borderColor = "#3FFF00";
         var input = document.createElement("input");

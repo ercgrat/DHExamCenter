@@ -33,11 +33,19 @@ echo <<<_BODY
     <h3>Development</h3>
     <p>
         At the current stage of development, eXam Center provides a small corpus of questions based on various XML technologies.
-        Soon in the future, students will be able to track their progress according to a multitude of metrics. These will include topic-level
+        In the near the future, students will be able to track their progress according to a multitude of metrics. These will include topic-level
         success, broad question-level success both as a single measurement and as improvement over time, and eventually topic suggestions
         and predictive performance indicators. Instructors will be able to identify question and answer-level success both across segments of
         the student body and for individuals, aiding their effort to address gaps in student understanding of the material.
     </p>
+    <h2>Update Notes</h2>
+    <ul>
+        <li>Version "1.0" - November 2013
+            <ul>
+                <li>System is available for Pitt students only, and with no ways to measure progress. Basic functionality.</li>
+            </ul>
+        </li>
+    </ul>
 _BODY;
 
 output_end();

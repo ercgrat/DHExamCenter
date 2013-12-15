@@ -23,7 +23,7 @@ function output_creation_form($user_len_invalid, $fullname_len_invalid, $pass_le
     }
     echo "</select></label>";
     
-    echo '<label>School username: <span class="warning">*</span> <br/><input type="text" name="account" size="35" maxlength="32" value="'.sanitizeString($_POST['account']).'"/> <span class="note">Must be registered by your instructor.</span></label>';
+    echo '<label>Invitation username: <span class="warning">*</span> <br/><input type="text" name="account" size="35" maxlength="32" value="'.sanitizeString($_POST['account']).'"/> <span class="note">Must be registered by your instructor.</span></label>';
     if($acc_len_invalid) { echo '<p class="warning">Use your unique school username. Your instructor must add your username to their course before you can register.</p>'; }
     if($account_used) { echo '<p class="warning">An account under your institution has already been created using this username. If you have already made an account and forget your password, please contact your instructor.</p>'; }
     if(!$account_exists) { echo '<p class="warning">School username has not been registered by an instructor. Contact your instructor to help set up your account.</p>'; }

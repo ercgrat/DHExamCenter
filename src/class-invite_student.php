@@ -48,7 +48,7 @@ if(strlen($account) <= 32 && strlen($account) > 3)
 }
 else
 {
-    echo "0|The username must be between 1 and 32 characters in length.";
+    echo "0|The username must be between 4 and 32 characters in length.";
 }
 
 ?>
