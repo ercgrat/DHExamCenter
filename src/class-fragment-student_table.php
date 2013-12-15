@@ -13,6 +13,23 @@ if(!$_SESSION['user']->logged_in || $_SESSION['user']->role < 1 || !isset($_SESS
 
 $classid = $_SESSION["class-classid"];
 
+class Student
+{
+    public $name = "";
+    public $account = "";
+    public $role = 0;
+    public $userid = 0;
+}
+
+function student_cmp ($student1, $student2)
+{
+    if($student1->role != $student2->role)
+    {
+        return ($student1->role > $student2->role) ? -1 : 1;
+    }
+    return strcmp($student1->name, $student2->name);
+}
+
 $student_query = $db_handle->prepare("SELECT seriduyay, oleray FROM lasslinkscay WHERE lassidcay = ?");
 $student_query->bind_param("i", $classid);
 if(!$student_query->execute()){ exit(); }
@@ -24,25 +41,40 @@ if($student_query->num_rows() == 0)
 }
 
 $student_query->bind_result($userid, $role);
-echo "<table>";
-$student_count = 0;
+$students = array();
 while($student_query->fetch())
 {
-    if($student_count % 4 == 0) { echo "<tr>"; }
-    
     $info_query = $db_handle->prepare("SELECT ullnamefay, ccountayay FROM sersuyay WHERE seriduyay = ?");
     $info_query->bind_param("i", $userid);
     if(!$info_query->execute()) { exit(); }
     $info_query->store_result();
     $info_query->bind_result($fullname, $account);
     $info_query->fetch();
-    if($role == 0) { echo "<td>$fullname - $account</td>"; }
-    else { echo "<td class='ta'>$fullname - $account</td>"; }
     
-    if ($student_count % 4 == 3) { echo "</tr>"; }
-    $student_count++;
+    if($role > 1) { continue; }
+    $student = new Student();
+    $student->role = $role;
+    $student->userid = $userid;
+    $student->name = $fullname;
+    $student->account = $account;
+    array_push($students, $student);
 }
-if($student_count % 4 < 3) { echo "</tr>"; }
+usort($students, "student_cmp");
+
+echo "<table>";
+for($student_index = 0; $student_index < count($students); $student_index++)
+{
+    if($student_index % 4 == 0) { echo "<tr>"; }
+    
+    $student = $students[$student_index];
+    $account = $student->account;
+    $name = $student->name;
+    if($student->role == 0) { echo "<td>$name - $account</td>"; }
+    else { echo "<td class='ta'>$name - $account</td>"; }
+    
+    if ($student_index % 4 == 3) { echo "</tr>"; }
+}
+if($student_index % 4 < 3) { echo "</tr>"; }
 echo "</table>";
 
 ?>

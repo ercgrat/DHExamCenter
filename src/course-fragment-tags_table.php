@@ -24,7 +24,7 @@ else
     $courseid = $_SESSION["course-courseid"];
 }
 
-$tag_query = $db_handle->prepare("SELECT agnametay, agidtay FROM agstay WHERE ourseidcay = ?");
+$tag_query = $db_handle->prepare("SELECT agnametay, agidtay FROM agstay WHERE ourseidcay = ? ORDER BY agnametay");
 $tag_query->bind_param("i", $courseid);
 if(!$tag_query->execute()) { exit(); }
 $tag_query->store_result();
