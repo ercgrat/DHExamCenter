@@ -5,6 +5,7 @@ require_once "login.php";
 
 session_start();
 session_regenerate_id();
+$_SESSION["page"] = "course";
 
 if(!$_SESSION['user']->logged_in)
 {

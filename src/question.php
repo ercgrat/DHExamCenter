@@ -5,6 +5,7 @@ require_once "login.php";
 
 session_start();
 session_regenerate_id();
+$_SESSION["page"] = "question";
 
 if(!$_SESSION['user']->logged_in)
 {
@@ -20,7 +21,6 @@ else if(!isset($_GET["id"]) || !is_numeric($_GET["id"]))
 
 $questionid = $db_handle->real_escape_string($_GET["id"]);
 $courseid = $_SESSION["course-courseid"];
-$_SESSION["page"] = "question";
 
 if($_SESSION['user']->role == 0)
 {

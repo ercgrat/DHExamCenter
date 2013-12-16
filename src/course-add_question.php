@@ -11,8 +11,7 @@ if(!$_SESSION["user"]->logged_in || !isset($_SESSION["course-courseid"]))
     exit();
 }
 
-
-if(isset($_SESSION["question-questionid"]))
+if($_SESSION["page"] == "question")
 {
     $editing = 1;
     $questionid = $_SESSION["question-questionid"];
