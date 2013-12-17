@@ -43,24 +43,37 @@ if($ta_query->num_rows() > 0)
     $courses = array();
     while($ta_query->fetch())
     {
-        $course_query = $db_handle->prepare("SELECT ourseidcay FROM lassescay WHERE lassidcay = ?");
+        $course_query = $db_handle->prepare("SELECT ourseidcay, nsessioniyay FROM lassescay WHERE lassidcay = ?");
         $course_query->bind_param("i", $classid);
         $course_query->execute();
         $course_query->store_result();
-        $course_query->bind_result($courseid);
+        $course_query->bind_result($courseid, $insession);
         $course_query->fetch();
-        array_push($courses, $courseid);
+        
+        $course = array($courseid, $insession);
+        array_push($courses, $course);
     }
-    $courses = array_unique($courses);
-    foreach($courses as $courseid)
+    
+    foreach($courses as $course)
     {
+        $courseid = $course[0];
+        $insession = $course[1];
+    
         $title_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
         $title_query->bind_param("i", $courseid);
         $title_query->execute();
         $title_query->store_result();
         $title_query->bind_result($course_title);
         $title_query->fetch();
-        echo "<li><a href='course.php?id=$courseid'>$course_title</a></li>";
+        
+        if($insession == 1)
+        {
+            echo "<li><a href='course.php?id=$courseid'>$course_title</a></li>";
+        }
+        else
+        {
+            echo "<li><span class='disabled'>$course_title <span class='note'>The sections you taught have ended.</span></span></li>";
+        }
     }
     echo "</ul>";
     echo "<hr/>";
@@ -85,11 +98,11 @@ else
 {
     while($class_query->fetch())
     {
-        $classname_query = $db_handle->prepare("SELECT lassnamecay, ourseidcay FROM lassescay WHERE lassidcay = ?");
+        $classname_query = $db_handle->prepare("SELECT lassnamecay, ourseidcay, nsessioniyay FROM lassescay WHERE lassidcay = ?");
         $classname_query->bind_param("i", $classid);
         $classname_query->execute();
         $classname_query->store_result();
-        $classname_query->bind_result($class_name, $courseid);
+        $classname_query->bind_result($class_name, $courseid, $insession);
         $classname_query->fetch();
         
         $course_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
@@ -99,16 +112,25 @@ else
         $course_query->bind_result($course_title);
         $course_query->fetch();
         
-        echo "<h3>$course_title</h3>";
-        echo "<h4>$class_name</h4>";
-        
-        echo "<form method='post' action='exam.php'>";
-        $_SESSION["course-courseid"] = $courseid;
-        require "course-fragment-tags_table.php";
-        echo "<input type='submit' value='Start Exam'/>";
-        echo "<input name='courseid' type='hidden' value='$courseid'/>";
-        echo "<div></div>";
-        echo "</form>";
+        if($insession == 1)
+        {
+            echo "<h3>$course_title</h3>";
+            echo "<h4>$class_name</h4>";
+            
+            echo "<form method='post' action='exam.php'>";
+            $_SESSION["course-courseid"] = $courseid;
+            require "course-fragment-tags_table.php";
+            echo "<input type='submit' value='Start Exam'/>";
+            echo "<input name='courseid' type='hidden' value='$courseid'/>";
+            echo "<div></div>";
+            echo "</form>";
+        }
+        else
+        {
+            echo "<h3 class='disabled'>$course_title</h3>";
+            echo "<h4 class='disabled'>$class_name <span class='note'>(ended)</span></h4>";
+            
+        }
     }
 }
 output_end();

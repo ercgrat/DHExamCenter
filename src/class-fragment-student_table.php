@@ -1,6 +1,7 @@
 <?php //class-fragment-student_table.php
 require_once "authenticate.php";
 require_once "login.php";
+require_once "core-student.php";
 
 session_start();
 session_regenerate_id();
@@ -12,23 +13,6 @@ if(!$_SESSION['user']->logged_in || $_SESSION['user']->role < 1 || !isset($_SESS
 }
 
 $classid = $_SESSION["class-classid"];
-
-class Student
-{
-    public $name = "";
-    public $account = "";
-    public $role = 0;
-    public $userid = 0;
-}
-
-function student_cmp ($student1, $student2)
-{
-    if($student1->role != $student2->role)
-    {
-        return ($student1->role > $student2->role) ? -1 : 1;
-    }
-    return strcmp($student1->name, $student2->name);
-}
 
 $student_query = $db_handle->prepare("SELECT seriduyay, oleray FROM lasslinkscay WHERE lassidcay = ?");
 $student_query->bind_param("i", $classid);

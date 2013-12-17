@@ -19,11 +19,32 @@ else if($_SESSION['user']->role < 1 || !isset($_GET["id"]) || !is_numeric($_GET[
     exit();
 }
 
+$classid = $db_handle->real_escape_string($_GET["id"]);
+$admin_query = $db_handle->prepare("SELECT * FROM lasslinkscay WHERE seriduyay = ? AND lassidcay = ? AND oleray = 2");
+$admin_query->bind_param("ii", $_SESSION["user"]->id, $classid);
+$admin_query->execute();
+$admin_query->store_result();
+if($admin_query->num_rows() != 1)
+{
+    header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php");
+    exit();
+}
+
+$session_query = $db_handle->prepare("SELECT nsessioniyay FROM lassescay WHERE lassidcay = ?");
+$session_query->bind_param("i", $classid);
+$session_query->execute();
+$session_query->store_result();
+$session_query->bind_result($insession);
+$session_query->fetch();
+if($insession != 1)
+{
+    header("Location: https://". $_SERVER["HTTP_HOST"]."/instructor.php");
+    exit();
+}
+
 $header = '<script type="text/javascript" src="class.js"></script>';
 $header.= '<link rel="stylesheet" type="text/css" href="class.css"/>';
 output_start($header, $_SESSION["user"]);
-
-$classid = $db_handle->real_escape_string($_GET["id"]);
 
 $class_query = $db_handle->prepare("SELECT lassnamecay, ourseidcay FROM lassescay WHERE lassidcay = ?");
 $class_query->bind_param("i", $classid);
@@ -63,8 +84,26 @@ echo "</div> <h3>Pending Students</h3> <div id='pending_student_table'>";
 
 require_once "class-fragment-pending_student_table.php";
 
+echo "</div> <hr/><h3>Add a Registered Student</h3>";
+
 echo <<<_STUDENT
-    </div>
+    <form id="registered_student_form">
+        <table>
+            <tr>
+                <td>Student: </td>
+                <td>
+_STUDENT;
+require_once "class-fragment-registered_student_selector.php";
+
+echo <<<_STUDENT
+                <span class="warning"/></td>
+            </tr>
+        </table>
+    </form>
+    <button id="registered_student_button">Add Student</button><span></span>
+_STUDENT;
+
+echo <<<_STUDENT
     <hr/>
     <h3>Invite a Student</h3>
     <form id="student_form">
@@ -97,6 +136,14 @@ echo <<<_TA2
     </form>
     <button id="ta_button">Appoint TA</button><span/>
 _TA2;
+
+echo <<<_DISABLE
+    <hr/>
+    <h3>End Class Session</h3>
+    <p>Terminating the class session will prevent all students and teaching assistants from accessing the course content via this portal.
+    Students who wish to continue using the materials must be added to an active class.</p>
+    <button id="end_button">End Class</button><span class="note">The class can always be restarted from the course page.</span>
+_DISABLE;
 
 output_end();
 

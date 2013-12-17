@@ -12,12 +12,12 @@ function create_class ()
     
     if(course_input.value == "")
     {
-        course_input.nextElementSibling.innerHTML = "Please select a course, or create a course if you have not yet done so.";
+        input.nextElementSibling.innerHTML = "Please select a course, or create a course if you have not yet done so.";
         return;
     }
     else
     {
-        course_input.nextElementSibling.innerHTML = "";
+        input.nextElementSibling.innerHTML = "";
     }
     
     if(class_input.value == "" || class_input.value.length > 256)

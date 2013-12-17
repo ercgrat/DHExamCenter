@@ -169,3 +169,7 @@ td {
     width:400px;
     padding:60px;
 }
+
+.disabled {
+    color:#444444;
+}

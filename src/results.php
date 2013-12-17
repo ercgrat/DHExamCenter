@@ -101,7 +101,7 @@ for($i = 0; $i < $num_questions; $i++)
     }
     
     $question_string .= "</ul>";
-    if(strlen($explanation) > 0) { $question_string .= "<p>Explanation: $explanation</p>"; }
+    if(strlen($explanation) > 0) { $question_string .= "<p><span class='explanation'>Explanation:</span> $explanation</p>"; }
     $question_string .= "</div>";
     $evaluation_string .= "<h3 class='question_header'>Question $question_no</h3>";
     if($correct_tally == 1) { $evaluation_string .= "<img class='correction_indicator' src='correct.png' alt='CORRECT: '/>"; }

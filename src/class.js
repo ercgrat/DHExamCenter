@@ -1,8 +1,11 @@
 function class_init()
 {
     document.getElementById("student_button").onclick = invite_student;
+    document.getElementById("registered_student_button").onclick = add_student;
     document.getElementById("ta_button").onclick = add_ta;
+    document.getElementById("end_button").onclick = end_class;
     document.getElementById("student_form").onsubmit = function () { return false; }
+    document.getElementById("registered_student_form").onsubmit = function () { return false; }
     var buttons = document.getElementsByClassName("delete_invite_button");
     for(var i = 0; i < buttons.length; i++)
     {
@@ -46,6 +49,45 @@ function add_ta()
     req.send();
 }
 
+function add_student()
+{
+    var input = document.getElementById("registered_student_selector");
+    var button = document.getElementById("registered_student_button");
+    
+    if(input.value == "" || isNaN(input.value))
+    {
+        input.nextElementSibling.innerHTML = "Please select a student to add.";
+        button.nextElementSibling.innerHTML = "";
+        return;
+    }
+    
+    var req = new XMLHttpRequest();
+    var getString = "class-add_student.php?id=" + input.value;
+    req.onreadystatechange = function () {
+        if(req.readyState == 4 && req.status == 200)
+        {
+            var response = req.responseText.split("|",2);
+            if(response[0] == "0")
+            {
+                input.nextElementSibling.innerHTML = response[1];
+                button.nextElementSibling.innerHTML = "";
+            }
+            else
+            {
+                input.nextElementSibling.innerHTML = "";
+                button.nextElementSibling.innerHTML = response[1];
+                if(response[0] == "2")
+                {
+                    reload_students();
+                    reload_student_selector();
+                }
+            }
+        }
+    }
+    req.open("GET", getString, false);
+    req.send();
+}
+
 function invite_student()
 {
     var input = document.getElementById("student_account_name");
@@ -61,7 +103,7 @@ function invite_student()
     var req = new XMLHttpRequest();
     var getString = "class-invite_student.php?account=" + input.value;
     req.onreadystatechange = function () {
-        if (req.readyState == 4 && req.status == 200)
+        if(req.readyState == 4 && req.status == 200)
         {
             var response = req.responseText.split("|", 2);
             if(response[0] == "0")
@@ -101,6 +143,20 @@ function reload_pending_students()
     req.send();
 }
 
+function reload_student_selector()
+{
+    var req = new XMLHttpRequest();
+    var getString = "class-fragment-registered_student_selector.php";
+    req.onreadystatechange = function () {
+        if(req.readyState == 4 && req.status == 200)
+        {
+            document.getElementById("registered_student_selector").parentNode.innerHTML = req.responseText;
+        }
+    }
+    req.open("GET", getString, false);
+    req.send();
+}
+
 function reload_students()
 {
     var req = new XMLHttpRequest();
@@ -128,6 +184,24 @@ function delete_student_invite()
     }
     req.open("GET", getString, false);
     req.send();
+}
+
+function end_class()
+{
+    var selection = confirm("Are you sure you want to terminate this class?");
+    if(selection == true)
+    {
+        var req = new XMLHttpRequest();
+        var getString = "class-end.php";
+        req.onreadystatechange = function () {
+            if(req.readyState == 4 && req.status == 200)
+            {
+                window.location.assign("https://xlearn.obdurodon.org/instructor.php");
+            }
+        }
+        req.open("GET", getString, false);
+        req.send();
+    }
 }
 
 addLoadEvent(class_init);

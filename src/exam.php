@@ -205,7 +205,7 @@ session_regenerate_id();
 if(!$_SESSION['user']->logged_in)
 {
     $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
-    header("Location: https://". $_SERVER["HTTP_HOST"] . "/student.php");
+    header("Location: https://". $_SERVER["HTTP_HOST"] . "/user_login.php");
     exit();
 }
 else if($_SESSION['user']->role != 0 || !isset($_POST['courseid']))
@@ -214,9 +214,19 @@ else if($_SESSION['user']->role != 0 || !isset($_POST['courseid']))
     exit();
 }
 
+$courseid = $db_handle->real_escape_string($_POST["courseid"]);
+$student_query = $db_handle->prepare("SELECT * FROM oursescay AS courses WHERE ourseidcay = ? AND EXISTS (SELECT * FROM lassescay AS classes WHERE ourseidcay = courses.ourseidcay AND EXISTS (SELECT * FROM lasslinkscay WHERE lassidcay = classes.lassidcay AND seriduyay = ? AND nsessioniyay = 1))");
+$student_query->bind_param("ii", $courseid, $_SESSION["user"]->id);
+$student_query->execute();
+$student_query->store_result();
+if($student_query->num_rows() != 1)
+{
+    header("Location: https://". $_SERVER["HTTP_HOST"] . "/student.php");
+    exit();
+}
+
 $header = "<link rel='stylesheet' type='text/css' href='exam.css'/>";
 
-$courseid = $db_handle->real_escape_string($_POST["courseid"]);
 $numeric_tags = TRUE;
 $tag_string = "";
 for($i = 0; $i < count($_POST["tags"]); $i++)

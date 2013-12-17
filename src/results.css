@@ -16,7 +16,13 @@ h3.question_header {
 
 div.question_body {
     position:relative;
+    margin-bottom:30px;
 }
+
+.explanation {
+    font-weight:bold;
+}
+
 img.correction {
     position:absolute;
     left:15px;
@@ -25,4 +31,5 @@ img.correction_indicator {
     position:absolute;
     width:17px;
     left:-5px;
+    top:0px;
 }

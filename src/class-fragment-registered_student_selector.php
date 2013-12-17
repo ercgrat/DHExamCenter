@@ -1,4 +1,4 @@
-<?php //class-fragment-student_selector.php
+<?php //class-fragment-registered_student_selector.php
 require_once "authenticate.php";
 require_once "login.php";
 require_once "core-student.php";
@@ -14,31 +14,21 @@ if(!$_SESSION['user']->logged_in || $_SESSION['user']->role < 1 || !isset($_SESS
 
 $classid = $_SESSION["class-classid"];
 
-$student_query = $db_handle->prepare("SELECT seriduyay, oleray FROM lasslinkscay WHERE lassidcay = ?");
-$student_query->bind_param("i", $classid);
+$student_query = $db_handle->prepare("SELECT seriduyay, ullnamefay, ccountayay FROM sersuyay AS users WHERE NOT EXISTS (SELECT lassidcay, seriduyay FROM lasslinkscay WHERE seriduyay = users.seriduyay AND lassidcay = ?) AND oleray = 0 AND nstidiyay = ?");
+$student_query->bind_param("ii", $classid, $_SESSION["user"]->inst);
 if(!$student_query->execute()){ exit(); }
 $student_query->store_result();
-$student_query->bind_result($userid, $role);
+$student_query->bind_result($userid, $name, $account);
 
 $students = array();
 while($student_query->fetch())
-{
-    $name_query = $db_handle->prepare("SELECT ullnamefay, ccountayay FROM sersuyay WHERE seriduyay = ?");
-    $name_query->bind_param("i", $userid);
-    $name_query->execute();
-    $name_query->store_result();
-    $name_query->bind_result($fullname, $account);
-    $name_query->fetch();
-    
-    $student = new Student($fullname, $account, $role, $userid);
-    if($role == 0)
-    {
-        array_push($students, $student);
-    }
+{   
+    $student = new Student($name, $account, 0, $userid);
+    array_push($students, $student);
 }
 usort($students, "student_cmp");
 
-echo "<select id='student_selector'>";
+echo "<select id='registered_student_selector'>";
 echo "<option value=''>Select a student</option>";
 foreach($students as $student)
 {
