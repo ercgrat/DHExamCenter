@@ -63,8 +63,8 @@ echo <<<_BODY1
     <h3>Add Question</h3>
     <form id="question_form">
         <p id="question_warning" class="warning"></p>
-        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea" cols="88" rows="3"></textarea></label>
-        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea" cols="88" rows="1"></textarea></label>
+        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea"></textarea></label>
+        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea"></textarea></label>
         <label>Resource Link: <div id="resource_selector">
 _BODY1;
 
@@ -79,28 +79,28 @@ echo <<<_BODY2
                 <tr>
                     <td><input type="checkbox" value="1"/></td>
                     <td>Answer 1: </td>
-                    <td><textarea class="answer" cols="70" rows="2"></textarea></td>
+                    <td><textarea class="answer"></textarea></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" value="2"/></td>
                     <td>Answer 2: </td>
-                    <td><textarea class="answer" cols="70" rows="2"></textarea></td>
+                    <td><textarea class="answer"></textarea></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" value="3"/></td>
                     <td>Answer 3: </td>
-                    <td><textarea class="answer" cols="70" rows="2"></textarea></td>
+                    <td><textarea class="answer"></textarea></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" value="4"/></td>
                     <td>Answer 4: </td>
-                    <td><textarea class="answer" cols="70" rows="2"></textarea></td>
+                    <td><textarea class="answer"></textarea></td>
                 </tr>
             </table>
         </div>
         <img src="add.png" id="adder" alt="[ADD ANSWER]"/>
         <img src="minus.png" id="remover" alt="[REMOVE ANSWER]"/>
-        <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea" cols="88" rows="2"></textarea></label>
+        <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea"></textarea></label>
     </form>
     <p><button id="question_button">Add Question</button> <span></span></p>
     <hr/>

@@ -1,9 +1,19 @@
-
 #question_form
 {
+    position:relative;
     margin-left:40px;
 }
 
 #answer_list label, #answer_list input {
     display:inline-block;
+}
+
+#question_textarea {
+    height:100px;
+}
+
+#question_textarea, #tag_textarea, #explanation_textarea {
+    width:90%;
+    overflow:auto;
+    resize:both;
 }

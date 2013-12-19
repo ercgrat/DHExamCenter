@@ -61,8 +61,8 @@ echo <<<_BODY
     <h3>Edit Question</h3>
     <form id="question_form">
         <p id="question_warning" class="warning"></p>
-        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea" cols="88" rows="3">$question_text</textarea></label>
-        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea" cols="88" rows="1">
+        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea">$question_text</textarea></label>
+        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea">
 _BODY;
 
 $tag_query = $db_handle->prepare("SELECT agnametay FROM agstay AS tags WHERE EXISTS (SELECT * FROM aglinkstay WHERE uestionidquay = ? AND agidtay = tags.agidtay)");
@@ -117,7 +117,7 @@ while($answer_query->fetch())
         <tr>
             <td><input type="checkbox" value="$correct" $checked/></td>
             <td>Answer $answer_number: </td>
-            <td><textarea class="answer" cols="72" rows="2">$answer_text</textarea></td>
+            <td><textarea class="answer">$answer_text</textarea></td>
         </tr>
 _ANSWER;
 }
@@ -127,7 +127,7 @@ echo <<<_BODY
         </div>
         <img src="add.png" id="adder" alt="[ADD ANSWER]"/>
         <img src="minus.png" id="remover" alt="[REMOVE ANSWER]"/>
-        <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea" cols="88" rows="2">$explanation</textarea></label>
+        <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea">$explanation</textarea></label>
     </form>
     <p><button id="question_button">Save Question</button> <span></span></p>
 _BODY;
