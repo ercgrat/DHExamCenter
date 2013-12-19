@@ -19,6 +19,7 @@ if(!isset($_SESSION['exam-courseid']) || !isset($_SESSION['exam-questions']) || 
 }
 $user = $_SESSION['user'];
 $courseid = $_SESSION['exam-courseid'];
+$classid = $_SESSION['exam-classid'];
 
 $title_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
 $title_query->bind_param("i", $courseid);
@@ -95,24 +96,25 @@ for($i = 0; $i < $num_questions; $i++)
                 $question_string .= "<li class='unselected'><img class='correction' src='incorrect.png' alt='INCORRECT: '/>".$answer_text."</li>";
             }
         }
-        $answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay) VALUES(?, ?, ?, ?)");
-        $answer_results_query->bind_param("isii", $_SESSION["user"]->id, $date, $answerid, $in_array);
+        $answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay, lassidcay) VALUES(?, ?, ?, ?, ?)");
+        $answer_results_query->bind_param("isiiI", $_SESSION["user"]->id, $date, $answerid, $in_array, $classid);
         $answer_results_query->execute();
     }
     
     $question_string .= "</ul>";
     if(strlen($explanation) > 0) { $question_string .= "<p><span class='explanation'>Explanation:</span> $explanation</p>"; }
     $question_string .= "</div>";
-    $evaluation_string .= "<h3 class='question_header'>Question $question_no</h3>";
+    $evaluation_string .= "<div class='question_header'>";
     if($correct_tally == 1) { $evaluation_string .= "<img class='correction_indicator' src='correct.png' alt='CORRECT: '/>"; }
     else { $evaluation_string .= "<img class='correction_indicator' src='incorrect.png' alt='INCORRECT: '/>"; }
+    $evaluation_string .= "<h3 class='question_header'>Question $question_no</h3></div>";
     $evaluation_string .= "<div class='question_body'><p class='question'>".$question_text."</p>";
     $evaluation_string .= "<ul class='correction_list'>";
     $evaluation_string .= $question_string;
     $correct_count += $correct_tally;
     
-    $question_results_query = $db_handle->prepare("INSERT INTO uestionresultsquay(seriduyay, imestamptay, uestionidquay, orrectcay) VALUES(?, ?, ?, ?)");
-    $question_results_query->bind_param("isii", $_SESSION["user"]->id, $date, $questionid, $correct_tally);
+    $question_results_query = $db_handle->prepare("INSERT INTO uestionresultsquay(seriduyay, imestamptay, uestionidquay, orrectcay, lassidcay) VALUES(?, ?, ?, ?, ?)");
+    $question_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $questionid, $correct_tally, $classid);
     $question_results_query->execute();
 }
 
@@ -130,6 +132,7 @@ _RESULTS;
 output_end();
 
 $_SESSION['exam-courseid'] = NULL;
+$_SESSION['exam-classid'] = NULL;
 $_SESSION['exam-questions'] = NULL;
 $_SESSION['exam-answers'] = NULL;
 ?>

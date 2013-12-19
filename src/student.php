@@ -122,6 +122,7 @@ else
             require "course-fragment-tags_table.php";
             echo "<input type='submit' value='Start Exam'/>";
             echo "<input name='courseid' type='hidden' value='$courseid'/>";
+            echo "<input name='classid' type='hidden' value='$classid'/>";
             echo "<div></div>";
             echo "</form>";
         }
@@ -129,7 +130,6 @@ else
         {
             echo "<h3 class='disabled'>$course_title</h3>";
             echo "<h4 class='disabled'>$class_name <span class='note'>(ended)</span></h4>";
-            
         }
     }
 }

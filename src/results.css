@@ -8,7 +8,9 @@ li.selected {
 li.unselected {
     list-style:none;
 }
-
+div.question_header {
+    position:relative;
+}
 h3.question_header {
     display:inline;
     margin:0 0 0 15px;

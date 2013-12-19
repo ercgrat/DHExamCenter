@@ -215,8 +215,9 @@ else if($_SESSION['user']->role != 0 || !isset($_POST['courseid']))
 }
 
 $courseid = $db_handle->real_escape_string($_POST["courseid"]);
-$student_query = $db_handle->prepare("SELECT * FROM oursescay AS courses WHERE ourseidcay = ? AND EXISTS (SELECT * FROM lassescay AS classes WHERE ourseidcay = courses.ourseidcay AND EXISTS (SELECT * FROM lasslinkscay WHERE lassidcay = classes.lassidcay AND seriduyay = ? AND nsessioniyay = 1))");
-$student_query->bind_param("ii", $courseid, $_SESSION["user"]->id);
+$classid = $db_handle->real_escape_string($_POST["classid"]);
+$student_query = $db_handle->prepare("SELECT * FROM oursescay AS courses WHERE ourseidcay = ? AND EXISTS (SELECT * FROM lassescay AS classes WHERE ourseidcay = courses.ourseidcay AND lassidcay = ? AND EXISTS (SELECT * FROM lasslinkscay WHERE lassidcay = ? AND seriduyay = ? AND nsessioniyay = 1))");
+$student_query->bind_param("iiii", $courseid, $classid, $classid, $_SESSION["user"]->id);
 $student_query->execute();
 $student_query->store_result();
 if($student_query->num_rows() != 1)
@@ -240,7 +241,7 @@ for($i = 0; $i < count($_POST["tags"]); $i++)
     $tag_string .= $_POST["tags"][$i];
 }
 
-if(is_numeric($courseid) && $numeric_tags)
+if(is_numeric($courseid) && is_numeric($classid) && $numeric_tags)
 {
     if($_SESSION['exam-courseid'] == $courseid && $_SESSION['exam-tag_string'] == $tag_string)
     {
@@ -251,6 +252,7 @@ if(is_numeric($courseid) && $numeric_tags)
     {
         $_SESSION['exam-new'] = 1;
         $_SESSION['exam-courseid'] = $courseid;
+        $_SESSION['exam-classid'] = $classid;
         $_SESSION['exam-tag_string'] = $tag_string;
         generate_new_exam($courseid, $header);
     }

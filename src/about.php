@@ -5,13 +5,6 @@ require_once "login.php";
 session_start();
 session_regenerate_id();
 
-if(!$_SESSION['user']->logged_in)
-{
-    $_SESSION['redirect'] = $_SERVER['REQUEST_URI'];
-    header("Location: https://". $_SERVER["HTTP_HOST"] . "/user_login.php");
-    exit();
-}
-
 output_start("", $_SESSION['user']);
 
 echo <<<_BODY
@@ -40,7 +33,15 @@ echo <<<_BODY
     </p>
     <h2>Update Notes</h2>
     <ul>
-        <li>Version "1.0" - November 2013
+        <li>Version 1.1 - December 17th, 2013
+            <ul>
+                <li>Page access and privileges updated to accommodate the disabling of class sessions.</li>
+                <li>Students may now be added to future sections of a course by the instructor.</li>
+                <li>Terminated courses are listed on student and instructor dashboards.</li>
+                <li>Results interface updated to appear less cluttered.</li>
+            </ul>
+        </li>
+        <li>Version 1.0 - November 2013
             <ul>
                 <li>System is available for Pitt students only, and with no ways to measure progress. Basic functionality.</li>
             </ul>
