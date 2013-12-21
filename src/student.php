@@ -40,24 +40,25 @@ if($ta_query->num_rows() > 0)
 {
     echo "<h2>Courses you TA</h2>";
     echo "<ul style='list-style:none'>";
-    $courses = array();
+    $classes = array();
     while($ta_query->fetch())
     {
-        $course_query = $db_handle->prepare("SELECT ourseidcay, nsessioniyay FROM lassescay WHERE lassidcay = ?");
-        $course_query->bind_param("i", $classid);
-        $course_query->execute();
-        $course_query->store_result();
-        $course_query->bind_result($courseid, $insession);
-        $course_query->fetch();
+        $class_query = $db_handle->prepare("SELECT ourseidcay, nsessioniyay, lassnamecay FROM lassescay WHERE lassidcay = ?");
+        $class_query->bind_param("i", $classid);
+        $class_query->execute();
+        $class_query->store_result();
+        $class_query->bind_result($courseid, $insession, $classname);
+        $class_query->fetch();
         
-        $course = array($courseid, $insession);
-        array_push($courses, $course);
+        $class = array($courseid, $insession, $classname);
+        array_push($classes, $class);
     }
     
-    foreach($courses as $course)
+    foreach($classes as $class)
     {
-        $courseid = $course[0];
-        $insession = $course[1];
+        $courseid = $class[0];
+        $insession = $class[1];
+        $classname = $class[2];
     
         $title_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
         $title_query->bind_param("i", $courseid);
@@ -68,11 +69,11 @@ if($ta_query->num_rows() > 0)
         
         if($insession == 1)
         {
-            echo "<li><a href='course.php?id=$courseid'>$course_title</a></li>";
+            echo "<li><a href='course.php?id=$courseid'>$course_title: $classname</a></li>";
         }
         else
         {
-            echo "<li><span class='disabled'>$course_title <span class='note'>The sections you taught have ended.</span></span></li>";
+            echo "<li><span class='disabled'>$course_title: $classname <span class='note'>The sections you taught have ended.</span></span></li>";
         }
     }
     echo "</ul>";

@@ -96,7 +96,7 @@ _STUDENT;
 require_once "class-fragment-registered_student_selector.php";
 
 echo <<<_STUDENT
-                <span class="warning"/></td>
+                <span class="warning"></span></td>
             </tr>
         </table>
     </form>

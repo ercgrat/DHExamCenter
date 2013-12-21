@@ -150,7 +150,9 @@ function reload_student_selector()
     req.onreadystatechange = function () {
         if(req.readyState == 4 && req.status == 200)
         {
-            document.getElementById("registered_student_selector").parentNode.innerHTML = req.responseText;
+            var selector = document.getElementById("registered_student_selector");
+            var parent = selector.parentNode;
+            parent.innerHTML = req.responseText + "<span class='warning'/>";
         }
     }
     req.open("GET", getString, false);

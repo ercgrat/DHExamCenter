@@ -157,13 +157,20 @@ function add_question()
                     document.getElementById("tag_textarea").value = "";
                     document.getElementById("resource_selector").firstElementChild.selectedIndex = 0;
                     document.getElementById("order_checkbox").checked = false;
+                    var checkboxes = document.getElementsByTagName("input");
+                    for(var i = 0; i < checkboxes.length; i++)
+                    {
+                        if(checkboxes[i].type == "checkbox")
+                        {
+                            checkboxes[i].checked = false;
+                        }
+                    }
                     var answers = document.getElementsByClassName("answer");
                     for(var i = 0; i < answers.length; i++)
                     {
                         answers[i].value = "";
                     }
                     document.getElementById("explanation_textarea").value = "";
-                    
                     document.getElementById("question_warning").innerHTML = "";
                     document.getElementById("question_button").nextElementSibling.innerHTML = "The question was successfully submitted!";
                     
@@ -205,8 +212,6 @@ function add_answer()
     
     var new_answertext_td = document.createElement("td");
     var new_answer = document.createElement("textarea");
-    new_answer.cols = "70";
-    new_answer.rows = "2";
     new_answer.className = "answer";
     new_answertext_td.appendChild(new_answer);
     
