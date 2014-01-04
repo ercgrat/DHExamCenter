@@ -23,11 +23,11 @@ $courseid = $db_handle->real_escape_string($_GET["id"]);
 
 if($_SESSION['user']->role == 0)
 {
-    $link_query = $db_handle->prepare("SELECT * FROM lassescay WHERE lassidcay = (SELECT lassidcay FROM lasslinkscay WHERE seriduyay = ? AND oleray = 1) AND ourseidcay = ? AND nsessioniyay = 1");
+    $link_query = $db_handle->prepare("SELECT lassescay.lassidcay FROM lassescay JOIN lasslinkscay ON lassescay.lassidcay = lasslinkscay.lassidcay WHERE lasslinkscay.seriduyay = ? AND lasslinkscay.oleray = 1 AND lassescay.ourseidcay = ? AND lassescay.nsessioniyay = 1");
     $link_query->bind_param("ii", $_SESSION["user"]->id, $courseid);
     $link_query->execute();
     $link_query->store_result();
-    if($link_query->num_rows() != 1)
+    if($link_query->num_rows() < 1)
     {
         header("Location:https://". $_SERVER["HTTP_HOST"] ."/student.php");
     }

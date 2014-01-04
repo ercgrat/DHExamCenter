@@ -1,9 +1,11 @@
 <?php //layout.php
-require_once "login.php";
-require_once "authenticate.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/login.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/authenticate.php";
 
 function output_start($header, $user)
 {
+    
+    $root = $_SERVER["HTTP_HOST"];
     echo <<<_PART1
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,8 +13,8 @@ function output_start($header, $user)
         <head>
             <meta http-equiv="Content-Type" content="text/html;charset=utf-16"/>
             <title>DH eXam Center</title>
-            <link rel="stylesheet" type="text/css" href="index.css"/>
-            <script type="text/javascript" src="layout.js"></script>
+            <link rel="stylesheet" type="text/css" href="https://$root/index.css"/>
+            <script type="text/javascript" src="https://$root/layout.js"></script>
 _PART1;
 
     echo $header;
@@ -23,7 +25,7 @@ _PART1;
         <div id="body">
         <div id="shadow_box">
             <div id="banner">
-                <a class="title" href="index.php">DH eXam Center</a>
+                <a class="title" href="https://$root">DH eXam Center</a>
                 <div id="subscript">
 _PART2;
 
@@ -31,12 +33,12 @@ _PART2;
     {
         if(isset($user->fullname)) { echo "Hi, ".$user->fullname.". "; }
         else { echo "Hi, ".$user->username.". "; }
-        echo "<a href='user_logout.php'>Logout</a>";
+        echo "<a href='https://$root/user_logout.php'>Logout</a>";
     }
     else
     {
         echo "You are not logged in. ";
-        echo "<a href='user_login.php'>Login</a>";
+        echo "<a href='https://$root/user_login.php'>Login</a>";
     }
     
     echo <<<_PART3
@@ -46,16 +48,16 @@ _PART2;
                 <div id="menu">
                     <p>NAVIGATION</p>
                     <ul>
-                    <li onclick="window.location='about.php'"><a href="about.php">About</a></li>
+                    <li onclick="window.location.assign('https://$root/about.php')"><img src='https://$root/nav_about.png'/><a href="https://$root/about.php">About</a></li>
 _PART3;
 
-    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location=\"administrate.php\"'><a href='administrate.php'>Admin Dashboard</a></li>"; }
-    if($user->logged_in && $user->role >= 1) { echo "<li onclick='window.location=\"instructor.php\"'><a href='instructor.php'>Instructor Dashboard</a></li>"; }
-    if($user->logged_in && $user->role == 0) { echo "<li onclick='window.location=\"student.php\"'><a href='student.php'>Student Dashboard</a></li>"; }
+    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location.assign(\"https://$root/administrate.php\")'><img src='https://$root/nav_admin.png'/><a href='https://$root/administrate.php'>Administrator</a></li>"; }
+    if($user->logged_in && $user->role >= 1) { echo "<li onclick='window.location.assign(\"https://$root/instructor.php\")'><img src='https://$root/nav_dashboard.png'/><a href='https://$root/instructor.php'>Instructor</a></li>"; }
+    if($user->logged_in && $user->role == 0) { echo "<li onclick='window.location.assign(\"https://$root/student.php\")'><img src='https://$root/nav_dashboard.png'/><a href='https://$root/student.php'>Student</a></li>"; }
 
     echo <<<_PART4
                         
-                        <li onclick="window.location='progress.php'"><a href="progress.php">View progress</a></li>
+                        <li onclick="window.location.assign('https://$root/progress')"><img src='https://$root/nav_progress.png'/><a href="https://$root/progress">Progress</a></li>
                     </ul>
                 </div>
                 <div id="content">

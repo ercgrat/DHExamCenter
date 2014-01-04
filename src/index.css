@@ -65,6 +65,12 @@ a.title {
 #menu {
     width:150px;
 }
+#menu img {
+    position:absolute;
+    top:6px;
+    width:20px;
+    height:20px;
+}
 #menu p {
     margin:0;
     height:18px;
@@ -81,6 +87,7 @@ a.title {
     list-style:none;
 }
 #menu ul li {
+    position:relative;
     padding:5px;
     padding-left:8px;
 }
@@ -91,6 +98,7 @@ a.title {
 #menu ul li a {
     color:black;
     text-decoration:none;
+    margin-left:28px;
 }
 #content {
     min-height:300px;
@@ -138,12 +146,12 @@ form label {
     font-size:80%;
 }
 
-p, h1, h2, h3, h4, form, button, table {
+p, h1, h2, h3, h4, h5, form, button, table {
     position:relative;
     margin:15px;
     font-weight:normal;
 }
-h2, h3, h4 {
+h2, h3, h4, h5 {
     text-transform:uppercase;
 }
 div {
@@ -172,4 +180,29 @@ td {
 
 .disabled {
     color:#444444;
+}
+
+.expander {
+    position:relative;
+}
+.expander_head {
+    font-size:110%;
+    position:relative;
+    text-transform:uppercase;
+    margin:10px 0px 10px 30px;
+    display:block;
+}
+.expander_head:hover {
+    text-decoration:underline;
+}
+.expander_content {
+    display:none;
+    margin:10px 0px 10px 30px;
+}
+.toggle_up, .toggle_down {
+    display:inline-block;
+    margin-left:10px;
+}
+.toggle_up {
+    display:none;
 }

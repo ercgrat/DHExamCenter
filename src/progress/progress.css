@@ -1,0 +1,12 @@
+/* progress.css */
+
+.donut_chart {
+    width:70px;
+    height:70px;
+}
+
+.bar_chart {
+    width:500px;
+    height:300px;
+    margin-left:15px;
+}
