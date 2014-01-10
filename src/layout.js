@@ -45,4 +45,24 @@ function expand()
     }
 }
 
+function animate(ref, start, end, unit)
+{
+    var interval;
+    animate.update = function (ref, start, end, unit) {
+        var tween = [1,2,3,4,5,6,7,8,9,10,9,8,7,6,5,4,3,2,1];
+        var distance = end - start;
+        if(typeof animate.update.i == "undefined") { animate.update.i = 0; }
+         
+        ref += (distance * (tween[animate.update.i]/100)) + unit;
+        animate.update.i++;
+        
+        if(animate.update.i > 18) {
+            clearInterval(interval);
+            animate.update.i = 0;
+        }
+    }
+    
+    interval = setInterval(animate.update.bind(ref,start,end,unit), 200);
+}
+
 addLoadEvent(layout_init);

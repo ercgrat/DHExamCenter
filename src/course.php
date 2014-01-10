@@ -39,6 +39,8 @@ $header .= '<script type="text/javascript" src="question.js"></script>';
 $header .= '<link rel="stylesheet" type="text/css" href="course.css"/>';
 output_start($header, $_SESSION["user"]);
 
+$root = $_SERVER["HTTP_HOST"];
+
 $course_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
 $course_query->bind_param("i", $courseid);
 $course_query->execute();
@@ -60,12 +62,14 @@ else
 echo <<<_BODY1
     <h2>$course_title</h2>
     <hr/>
-    <h3>Add Question</h3>
-    <form id="question_form">
-        <p id="question_warning" class="warning"></p>
-        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea"></textarea></label>
-        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea"></textarea></label>
-        <label>Resource Link: <div id="resource_selector">
+    <div class="expander">
+        <div class="expander_head"><h3>Add Question</h3><img class="toggle_down" src="https://$root/expander_down.png"/><img class="toggle_up" src="https://$root/expander_up.png"/></div>
+        <div class="expander_content">
+        <form id="question_form">
+            <p id="question_warning" class="warning"></p>
+            <label>Question: <br/><p class="warning"></p><textarea id="question_textarea"></textarea></label>
+            <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea"></textarea></label>
+            <label>Resource Link: <div id="resource_selector">
 _BODY1;
 
 require_once "course-fragment-resource_selector.php";
@@ -103,6 +107,7 @@ echo <<<_BODY2
         <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea"></textarea></label>
     </form>
     <p><button id="question_button">Add Question</button> <span></span></p>
+    </div></div>
     <hr/>
     <h3>Add Resource</h3>
     <table>

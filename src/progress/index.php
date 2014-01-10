@@ -47,7 +47,7 @@ if($_SESSION["user"]->role < 1)
     {
         $_POST["progress-tag_frequency-classid"] = $classid;
         $_POST["progress-tag_frequency-userid"] = $_SESSION["user"]->id;
-        echo "<div class='expander'><div class='expander_head'>$class<img class='toggle_up' src='https://".$_SERVER["HTTP_HOST"]."/expander_up.png' alt='MINIMIZE'/><img class='toggle_down' src='https://".$_SERVER["HTTP_HOST"]."/expander_down.png' alt='EXPAND'/></div><div class='expander_content'>";
+        echo "<div class='expander'><div class='expander_head'><h3>$class</h3><img class='toggle_up' src='https://".$_SERVER["HTTP_HOST"]."/expander_up.png' alt='MINIMIZE'/><img class='toggle_down' src='https://".$_SERVER["HTTP_HOST"]."/expander_down.png' alt='EXPAND'/></div><div class='expander_content'>";
         require __DIR__."/fragments/tag_frequency.php";
         echo "</div></div>";
     }
@@ -77,7 +77,7 @@ else
         while($class_query->fetch())
         {
             $_POST["progress-question_frequency-classid"] = $courseid;
-            echo "<div class='expander'><div class='expander_head'>$class<img class='toggle_up' src='https://".$_SERVER["HTTP_HOST"]."/expander_up.png' alt='MINIMIZE'/><img class='toggle_down' src='https://".$_SERVER["HTTP_HOST"]."/expander_down.png' alt='EXPAND'/></div><div class='expander_content'>";
+            echo "<div class='expander'><div class='expander_head'><h3>$class</h3><img class='toggle_up' src='https://".$_SERVER["HTTP_HOST"]."/expander_up.png' alt='MINIMIZE'/><img class='toggle_down' src='https://".$_SERVER["HTTP_HOST"]."/expander_down.png' alt='EXPAND'/></div><div class='expander_content'>";
             echo "<h4>Frequency of correctness</h4>";
             echo "<h5>By question</h5>";
             require __DIR__."/fragments/question_frequency.php";

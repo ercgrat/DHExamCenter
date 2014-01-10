@@ -186,21 +186,21 @@ td {
     position:relative;
 }
 .expander_head {
-    font-size:110%;
     position:relative;
     text-transform:uppercase;
-    margin:10px 0px 10px 30px;
     display:block;
 }
-.expander_head:hover {
+.expander_head:hover * {
     text-decoration:underline;
+}
+.expander_head * {
+    display:inline-block;
 }
 .expander_content {
     display:none;
     margin:10px 0px 10px 30px;
 }
 .toggle_up, .toggle_down {
-    display:inline-block;
     margin-left:10px;
 }
 .toggle_up {

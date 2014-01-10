@@ -33,6 +33,12 @@ echo <<<_BODY
     </p>
     <h2>Update Notes</h2>
     <ul>
+        <li>Version 1.2 - January 2, 2014
+            <ul>
+                <li>Progress feature added. Students can access summaries of their performance in terms of topic tags. Instructors can view tag-based and question-based class-level performance.</li>
+                <li>The navigation menu was simplified and updated to include icons.</li>
+            </ul>
+        </li>
         <li>Version 1.1 - December 17th, 2013
             <ul>
                 <li>Page access and privileges updated to accommodate the disabling of class sessions.</li>

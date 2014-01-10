@@ -28,6 +28,10 @@
                 <stop offset="0%" style="stop-color:ghostwhite;stop-opacity:1"/>
                 <stop offset="100%" style="stop-color:lightgrey;stop-opacity:1"/>
             </linearGradient>
+            <linearGradient id="grad3" x1="0%" x2="0%" y1="0%" y2="100%">
+                <stop offset="0%" style="stop-color:black;stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:#98F5FF;stop-opacity:1"/>
+            </linearGradient>
             
             <xsl:for-each select="object">
                 <xsl:variable name="preceding_count" select="count(current()/preceding-sibling::object)"/>

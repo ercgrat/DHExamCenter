@@ -6,12 +6,13 @@ function output_start($header, $user)
 {
     
     $root = $_SERVER["HTTP_HOST"];
+    
     echo <<<_PART1
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
-            <meta http-equiv="Content-Type" content="text/html;charset=utf-16"/>
+            <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
             <title>DH eXam Center</title>
             <link rel="stylesheet" type="text/css" href="https://$root/index.css"/>
             <script type="text/javascript" src="https://$root/layout.js"></script>
@@ -48,16 +49,16 @@ _PART2;
                 <div id="menu">
                     <p>NAVIGATION</p>
                     <ul>
-                    <li onclick="window.location.assign('https://$root/about.php')"><img src='https://$root/nav_about.png'/><a href="https://$root/about.php">About</a></li>
+                    <li onclick="window.location.assign('https://$root/about.php')"><img src='https://$root/nav_about.png' alt='[ ]'/><a href="https://$root/about.php">About</a></li>
 _PART3;
 
-    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location.assign(\"https://$root/administrate.php\")'><img src='https://$root/nav_admin.png'/><a href='https://$root/administrate.php'>Administrator</a></li>"; }
-    if($user->logged_in && $user->role >= 1) { echo "<li onclick='window.location.assign(\"https://$root/instructor.php\")'><img src='https://$root/nav_dashboard.png'/><a href='https://$root/instructor.php'>Instructor</a></li>"; }
-    if($user->logged_in && $user->role == 0) { echo "<li onclick='window.location.assign(\"https://$root/student.php\")'><img src='https://$root/nav_dashboard.png'/><a href='https://$root/student.php'>Student</a></li>"; }
+    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location.assign(\"https://$root/administrate.php\")'><img src='https://$root/nav_admin.png' alt='[ ]'/><a href='https://$root/administrate.php'>Administrator</a></li>"; }
+    if($user->logged_in && $user->role >= 1) { echo "<li onclick='window.location.assign(\"https://$root/instructor.php\")'><img src='https://$root/nav_dashboard.png' alt='[ ]'/><a href='https://$root/instructor.php'>Instructor</a></li>"; }
+    if($user->logged_in && $user->role == 0) { echo "<li onclick='window.location.assign(\"https://$root/student.php\")'><img src='https://$root/nav_dashboard.png' alt='[ ]'/><a href='https://$root/student.php'>Student</a></li>"; }
 
     echo <<<_PART4
                         
-                        <li onclick="window.location.assign('https://$root/progress')"><img src='https://$root/nav_progress.png'/><a href="https://$root/progress">Progress</a></li>
+                        <li onclick="window.location.assign('https://$root/progress')"><img src='https://$root/nav_progress.png' alt='[ ]'/><a href="https://$root/progress">Progress</a></li>
                     </ul>
                 </div>
                 <div id="content">

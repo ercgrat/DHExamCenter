@@ -70,21 +70,25 @@ else
     $course_query->fetch();
 }
 
+$root = $_SERVER["HTTP_HOST"];
+
 echo <<<_HEAD
     <h2>$class_title</h2>
     <h3><a class="title" href="course.php?id=$courseid">$course_title</a></h3>
     <hr/>
-    <h3>Current Students</h3>
-    <div id='student_table'>
+    <div class='expander'>
+        <div class='expander_head'><h3>Current Students</h3><img class='toggle_up' src='https://$root/expander_up.png' ALT='MINIMIZE'/><img class='toggle_down' src='https://$root/expander_down.png' ALT='EXPAND'/></div>
+        <div class='expander_content'>
+            <div id='student_table'>
 _HEAD;
 
 require_once "class-fragment-student_table.php";
 
-echo "</div> <h3>Pending Students</h3> <div id='pending_student_table'>";
+echo "</div></div></div> <div class='expander'><div class='expander_head'><h3>Pending Students</h3><img class='toggle_up' src='https://$root/expander_up.png' ALT='MINIMIZE'/><img class='toggle_down' src='https://$root/expander_down.png' ALT='EXPAND'/></div> <div class='expander_content'><div id='pending_student_table'>";
 
 require_once "class-fragment-pending_student_table.php";
 
-echo "</div> <hr/><h3>Add a Registered Student</h3>";
+echo "</div></div></div> <hr/><h3>Add a Registered Student</h3>";
 
 echo <<<_STUDENT
     <form id="registered_student_form">
