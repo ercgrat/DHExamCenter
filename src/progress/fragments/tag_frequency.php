@@ -35,42 +35,20 @@ else
 $tags_query->execute();
 $tags_query->store_result();
 $tags_query->bind_result($tagid, $ratio, $tag);
-if($tags_query->num_rows() == 0)
-{
+if($tags_query->num_rows() == 0) {
     echo "<p>No results found.</p>";
+} else {
+	echo "<ul class='horizontal_list'>";
+	while($tags_query->fetch()) {
+		echo "<li class='horizontal_item'>";
+		$xml = "<root><object ratio='$ratio'>$tag</object></root>";
+		$doc = new DOMDocument();
+		$doc->loadXML($xml);
+		$table_data = $xslt->transformToXml($doc);
+		echo "<td><p>$tag</p>$table_data</td>";
+		echo "</li>";
+	}
+	echo "</ul>";
 }
-while($tags_query->fetch())
-{
-    array_push($tag_xml, "<root><object ratio='$ratio'>$tag</object></root>");
-    array_push($tag_names, $tag);
-}
-
-echo "<table>";
-$columns = 5;
-$rows = (int)(count($tag_xml)/$columns);
-if((count($tag_xml) % $columns) > 0) { $rows++; }
-
-for($i = 0; $i < $rows; $i++)
-{
-    echo "<tr>";
-    for($j = 0; $j < $columns; $j++)
-    {
-        $table_data = "";
-        $index = $i*$columns + $j;
-        $table_data = "";
-        $xml = "";
-        if($index < count($tag_xml))
-        {
-            $xml = $tag_xml[$index];
-            $doc = new DOMDocument();
-            $doc->loadXML($xml);
-            $table_data = $xslt->transformToXml($doc);
-        }
-        
-        echo "<td><p>$tag_names[$index]</p>$table_data</td>";
-    }
-    echo "</tr>";
-}
-echo "</table>";
 
 ?>

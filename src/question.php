@@ -22,17 +22,26 @@ else if(!isset($_GET["id"]) || !is_numeric($_GET["id"]))
 $questionid = $db_handle->real_escape_string($_GET["id"]);
 $courseid = $_SESSION["course-courseid"];
 
+$question_query = $db_handle->prepare("SELECT oursescay.ourseidcay FROM oursescay JOIN agstay ON agstay.ourseidcay = oursescay.ourseidcay JOIN aglinkstay ON agstay.agidtay = aglinkstay.agidtay WHERE aglinkstay.uestionidquay = ?");
+$question_query->bind_param("i", $questionid);
+$question_query->execute();
+$question_query->store_result();
+$question_query->bind_result($q_courseid);
+$question_query->fetch();
+if($q_courseid != $courseid) {
+	header("Location:https://". $_SERVER["HTTP_HOST"] ."/student.php");
+}
+
 if($_SESSION['user']->role == 0)
 {
-    $link_query = $db_handle->prepare("SELECT * FROM lassescay WHERE lassidcay = (SELECT lassidcay FROM lasslinkscay WHERE seriduyay = ? AND oleray = 1) AND ourseidcay = ? AND nsessioniyay = 1");
+    $link_query = $db_handle->prepare("SELECT * FROM lasslinkscay JOIN lassescay ON lasslinkscay.lassidcay = lassescay.lassidcay JOIN oursescay ON oursescay.ourseidcay = lassescay.ourseidcay WHERE lasslinkscay.seriduyay = ? AND oursescay.ourseidcay = ? AND lassescay.nsessioniyay = 1");
     $link_query->bind_param("ii", $_SESSION["user"]->id, $courseid);
     $link_query->execute();
     $link_query->store_result();
-    if($link_query->num_rows() != 1)
+    if($link_query->num_rows() < 1)
     {
         header("Location:https://". $_SERVER["HTTP_HOST"] ."/student.php");
     }
-    $_SESSION["TA"] = 1;
 }
 
 $header = '<script type="text/javascript" src="question.js"></script>';
@@ -56,8 +65,7 @@ $_SESSION["question-questionid"] = $questionid;
 $_SESSION["question-resourceid"] = $resourceid;
 
 echo <<<_BODY
-    <h2><a class="title" href="course.php?id=$courseid">$course_title</a></h2>
-    <hr/>
+    <h2><a class="title2" href="course.php?id=$courseid">$course_title</a></h2>
     <h3>Edit Question</h3>
     <form id="question_form">
         <p id="question_warning" class="warning"></p>
@@ -98,7 +106,7 @@ echo <<<_BODY
         </label>
         <p id="answer_warning" class="warning"></p>
         <div id="answer_list">
-            <table>
+            <table class='form'>
 _BODY;
 
 $answer_query = $db_handle->prepare("SELECT nsweridayay, nswer_textayay, orrectcay FROM nswersayay WHERE uestionidquay = ? ORDER BY nsweridayay");

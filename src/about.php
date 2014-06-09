@@ -8,31 +8,41 @@ session_regenerate_id();
 output_start("", $_SESSION['user']);
 
 echo <<<_BODY
-    <h2>Welcome to eXam Center!</h2>
+    <h2>About</h2>
     <h3>Synopsis</h3>
-    <p>
-        DH eXam Center is a learning resource for students of Computational Methods in the Humanities, a University Honors
-        College course taught by Dr. David J. Birnbaum at the University of Pittsburgh. Only students of the course will
-        be able to create an account and access the learning materials offered here, but visitors will soon be able to see
-        snapshots of what is available for registered users.
-    </p>
-    <p>
-        The eXam Center is designed to give students a quick self-assessment system that provides immediate testing feedback.
-        Students can pick from a range of topic tags and will be given a random selection of questions from the corpus
-        of questions available in the XLearn database tagged with some combination of the selected tags.
-        Topics include a number of XML-based languages as well as web-based languages pertinent to the practice of "digital humanities,"
-        language-specific functions and concepts, and general computational terminology.
-    </p>
+    <p>Welcome to DH eXam Center.  This site is intended as a learning resource for students of digital humanities courses whose instructors would like to provide
+	a responsive, online supplement to their in-class material.  Only students of instructors who sign up with eXam Center will be able to create an account and access
+	the learning materials offered here, but visitors can still view the material created by those courses.</p>
+    <p>The eXam Center is designed to give students a self-assessment system that provides immediate testing feedback.  Students can pick from a range of question
+    topic tags - as labeled by their instructors - and then be given a random set of questions under those topics from the corpus of questions created by their instructor in the eXam database.
+	After taking practice exams, students have the ability to look at their past test results and study their progress by topic and in comparison with other students.</p>
+	<p>The questions that instructors create with the course dashboard tool should be engaging and somewhat difficult. Two primary goals of eXam Center are for students to
+	have a way of assessing their knowledge, allowing them to focus studying on weaker areas, and for students to have an additional way to practice using their knowledge outside of the classroom.
+	Instructors that use eXam Center can respond to this activity by reviewing the progress of their classes and students by topic, and tailor their classroom environment to account
+	for observed performance in different subject areas.</p>
     <h3>Development</h3>
     <p>
-        At the current stage of development, eXam Center provides a small corpus of questions based on various XML technologies.
-        In the near the future, students will be able to track their progress according to a multitude of metrics. These will include topic-level
-        success, broad question-level success both as a single measurement and as improvement over time, and eventually topic suggestions
-        and predictive performance indicators. Instructors will be able to identify question and answer-level success both across segments of
-        the student body and for individuals, aiding their effort to address gaps in student understanding of the material.
+        At the current stage of development, eXam Center allows instructors as well as their designated teaching assistants to build a corpus of questions
+		with topic tags that their students can take exams on. Students are able to see a couple progress metrics, and soon will be able to track their
+		progress according to a multitude of them. These will include topic-level success, broad question-level success both as a single measurement
+		and as improvement over time, and eventually topic suggestions and predictive performance indicators. Instructors will be able to identify
+		question and answer-level success both across segments of the student body and for individuals, aiding their effort to address gaps in student
+		understanding of their course material.
     </p>
-    <h2>Update Notes</h2>
+    <h4>Update Notes</h4>
     <ul>
+		<li>Version 1.4 - June 8, 2014
+			<ul>
+				<li>Complete UI overhaul.</li>
+				<li>Code redesign and fixing of minor bugs across the site.</li>
+			</ul>
+		</li>
+		<li>Version 1.3 - May 27, 2014
+			<ul>
+				<li>Password change feature added.</li>
+				<li>Site description modified to accommodate new development goals.</li>
+			</ul>
+		</li>
         <li>Version 1.2 - January 2, 2014
             <ul>
                 <li>Progress feature added. Students can access summaries of their performance in terms of topic tags. Instructors can view tag-based and question-based class-level performance.</li>

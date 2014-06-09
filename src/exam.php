@@ -126,7 +126,7 @@ _START;
 function output_test_end()
 {
     echo <<<_END
-                <input type="submit"/>
+                <input class="submit_type" type="submit"/>
             </form>
         </div>
 _END;

@@ -65,4 +65,15 @@ function animate(ref, start, end, unit)
     interval = setInterval(animate.update.bind(ref,start,end,unit), 200);
 }
 
+//Take from http://www.javascriptkit.com/javatutors/setcss3properties.shtml
+function getSupportedProperty(propertyArray){
+    var root=document.documentElement //reference root element of document
+    for (var i=0; i<propertyArray.length; i++){ //loop through possible properties
+        if (propertyArray[i] in root.style){ //if property exists on element (value will be string, empty string if not set)
+            return propertyArray[i] //return that string
+        }
+    }
+}
+
+
 addLoadEvent(layout_init);

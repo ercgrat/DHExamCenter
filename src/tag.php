@@ -62,7 +62,7 @@ echo <<<_HEAD
     <h2>Questions with Tag "$tag_name"</h2>
     <h3><a class="title" href="course.php?id=$courseid">$course_title</a></h3>
     <hr/>
-    <h3>Select a Question to Edit</h3>
+    <h4>Select a Question to Edit</h4>
     <div id="review_question_container">
 _HEAD;
 
@@ -108,7 +108,7 @@ while($id_query->fetch())
         $tagname_query->store_result();
         $tagname_query->bind_result($qtagname);
         $tagname_query->fetch();
-        echo "<a class=\"title\" href=\"tag.php?id=$qtagid\">$qtagname</a>";
+        echo "<a class='title3' href=\"tag.php?id=$qtagid\">$qtagname</a>";
         if($current_tag < $num_tags) { echo ", "; }
     }
     echo '</p>';

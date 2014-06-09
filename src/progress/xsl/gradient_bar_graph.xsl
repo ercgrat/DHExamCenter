@@ -43,7 +43,6 @@
                 <xsl:if test="not(number(@fake) = 1)">
                     <xsl:variable name="bar_x" select="$origin_x + (($preceding_count+1)*$bar_margin)+ ($preceding_count*$bar_width)"/>
                     <xsl:variable name="bar_height" select="$height*@ratio"/>
-                    <text><xsl:value-of select="$preceding_count"></xsl:value-of></text>
                     <xsl:if test="number(@ratio) = 0">
                         <rect stroke="none" rx="1" ry="1" stroke-width="1" fill="url(#grad1)" x="{$bar_x}" y="{$origin_y - 5}" width="{$bar_width}" height="{5}">
                             <title><xsl:value-of select="current()"/></title>

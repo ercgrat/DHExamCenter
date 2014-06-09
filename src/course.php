@@ -31,7 +31,6 @@ if($_SESSION['user']->role == 0)
     {
         header("Location:https://". $_SERVER["HTTP_HOST"] ."/student.php");
     }
-    $_SESSION["TA"] = 1;
 }
 
 $header = '<script type="text/javascript" src="course.js"></script>';
@@ -61,11 +60,11 @@ else
 
 echo <<<_BODY1
     <h2>$course_title</h2>
-    <hr/>
     <div class="expander">
-        <div class="expander_head"><h3>Add Question</h3><img class="toggle_down" src="https://$root/expander_down.png"/><img class="toggle_up" src="https://$root/expander_up.png"/></div>
+        <div class="expander_head header"><h3>Add Question</h3><img class="toggle_down" src="https://$root/expander_down.png"/><img class="toggle_up" src="https://$root/expander_up.png"/></div>
         <div class="expander_content">
         <form id="question_form">
+			<h4>New Question</h4>
             <p id="question_warning" class="warning"></p>
             <label>Question: <br/><p class="warning"></p><textarea id="question_textarea"></textarea></label>
             <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea"></textarea></label>
@@ -79,7 +78,7 @@ echo <<<_BODY2
         <label>Preserve answer order? <input id="order_checkbox" type="checkbox"/></label>
         <p id="answer_warning" class="warning"></p>
         <div id="answer_list">
-            <table>
+            <table class='form'>
                 <tr>
                     <td><input type="checkbox" value="1"/></td>
                     <td>Answer 1: </td>
@@ -108,14 +107,12 @@ echo <<<_BODY2
     </form>
     <p><button id="question_button">Add Question</button> <span></span></p>
     </div></div>
-    <hr/>
     <h3>Add Resource</h3>
-    <table>
+    <table class="form">
         <tr><td>Resource Name:</td><td><input id="resource_name" type="text" size="40" maxlength="256"/> <span class="warning"></span></td></tr>
         <tr><td>URL:</td><td><input id="resource_url" type="text" size="40" maxlength="512" value="http://"/> <span class="warning"></span></td></tr>
     </table>
     <p><button id="resource_button">Add Resource</button> <span></span></p>
-    <hr/>
     <h3>Corpus</h3>
     <h4>Current Tags</h4>
     <p>Select a tag to see question results.</p>

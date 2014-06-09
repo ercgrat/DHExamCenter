@@ -45,20 +45,15 @@ while($student_query->fetch())
 }
 usort($students, "student_cmp");
 
-echo "<table>";
+echo "<ul class='horizontal_list'>";
 for($student_index = 0; $student_index < count($students); $student_index++)
 {
-    if($student_index % 4 == 0) { echo "<tr>"; }
-    
     $student = $students[$student_index];
     $account = $student->account;
     $name = $student->name;
-    if($student->role == 0) { echo "<td>$name - $account</td>"; }
-    else { echo "<td class='ta'>$name - $account</td>"; }
-    
-    if ($student_index % 4 == 3) { echo "</tr>"; }
+    if($student->role == 0) { echo "<li class='horizontal_item'>$name - $account</li>"; }
+    else { echo "<li class='horizontal_item ta'>$name - $account</li>"; }
 }
-if($student_index % 4 < 3) { echo "</tr>"; }
-echo "</table>";
+echo "</ul>";
 
 ?>

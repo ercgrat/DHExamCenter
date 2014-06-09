@@ -1,16 +1,15 @@
 <?php //layout.php
 require_once $_SERVER["DOCUMENT_ROOT"]."/login.php";
 require_once $_SERVER["DOCUMENT_ROOT"]."/authenticate.php";
+$root = $_SERVER["HTTP_HOST"];
 
 function output_start($header, $user)
 {
-    
-    $root = $_SERVER["HTTP_HOST"];
+    global $root;
     
     echo <<<_PART1
-    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml">
+    <!DOCTYPE html>
+    <html>
         <head>
             <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
             <title>DH eXam Center</title>
@@ -32,8 +31,8 @@ _PART2;
 
     if($user->logged_in == 1)
     {
-        if(isset($user->fullname)) { echo "Hi, ".$user->fullname.". "; }
-        else { echo "Hi, ".$user->username.". "; }
+        if(isset($user->fullname)) { echo "Hi, <a href='https://$root/user.php'>".$user->fullname."</a>. "; }
+        else { echo "Hi, <a href='https://$root/user.php'>".$user->username."</a>. "; }
         echo "<a href='https://$root/user_logout.php'>Logout</a>";
     }
     else

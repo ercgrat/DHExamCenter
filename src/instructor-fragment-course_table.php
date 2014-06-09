@@ -16,8 +16,8 @@ $course_query->bind_param("i", $_SESSION['user']->id);
 if(!$course_query->execute()) { output_runtime_error("Problem retrieving courses."); }
 $course_query->store_result();
 $course_query->bind_result($course_title, $courseid, $inst_name);
-if($course_query->num_rows() > 0)
-{
+if($course_query->num_rows() > 0) {
+
     $course_query->fetch();
     $current_inst = $inst_name;
     
@@ -27,29 +27,33 @@ if($course_query->num_rows() > 0)
     $class_query->store_result();
     $class_query->bind_result($class_name, $classid, $insession);
     $class_query->fetch();
-    
-    if($insession == 1)
-    {
-        echo "<table><tr><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+	
+	$course_count = 1;
+	$row_class = "variation1";
+    if($insession == 1) {
+        echo "<table class='information'><tr class='header'><th>Institution</th><th>Course title</th><th>Class sessions</th></tr><tr class='$row_class'><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+    } else {
+        echo "<table class='information'><tr class='header'><th>Institution</th><th>Course title</th><th>Class sessions</th></tr><tr class='$row_class'><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
     }
-    else
-    {
-        echo "<table><tr><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
-    }
+	
     while ($class_query->fetch())
     {
-        if($insession == 1)
-        {
-            echo "<tr><td></td><td></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
-        }
-        else
-        {
-            echo "<tr><td></td><td></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
+        if($insession == 1) {
+            echo "<tr class='$row_class'><td></td><td></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+        } else {
+            echo "<tr class='$row_class'><td></td><td></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
         }
     }
-        
-    while($course_query->fetch())
-    {
+	
+	$course_count++;
+    while($course_query->fetch()) {
+	
+		if($course_count % 2 == 1) {
+			$row_class = "variation1";
+		} else {
+			$row_class = "variation2";
+		}
+		
         $class_query = $db_handle->prepare("SELECT lassnamecay, lassidcay, nsessioniyay FROM lassescay WHERE ourseidcay = $courseid ORDER BY nsessioniyay DESC");
         if(!$class_query->execute()) { output_runtime_error("Problem retrieving classes."); }
         $class_query->store_result();
@@ -58,46 +62,32 @@ if($course_query->num_rows() > 0)
             $class_name = "";
         }
     
-        if($inst_name != $current_inst)
-        {
+        if($inst_name != $current_inst) {
             $current_inst = $inst_name;
-            if($insession == 1)
-            {
-                echo "<tr><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+            if($insession == 1) {
+                echo "<tr class='$row_class'><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+            } else {
+                echo "<tr class='$row_class'><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
             }
-            else
-            {
-                echo "<tr><td>$inst_name</td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
-            }
-        }
-        else
-        {
-            if($insession == 1)
-            {
-                echo "<tr><td></td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
-            }
-            else
-            {
-                echo "<tr><td></td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
+        } else {
+            if($insession == 1) {
+                echo "<tr class='$row_class'><td></td><td><a href='course.php?id=$courseid'>$course_title</a></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+            } else {
+                echo "<tr class='$row_class'><td></td><td><a href='course.php?id=$courseid'>$course_title</a></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
             }
         }
         
-        while ($class_query->fetch())
-        {
-            if($insession == 1)
-            {
-                echo "<tr><td></td><td></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
-            }
-            else
-            {
-                echo "<tr><td></td><td></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
+        while ($class_query->fetch()) {
+            if($insession == 1) {
+                echo "<tr class='$row_class'><td></td><td></td><td><a href='class.php?id=$classid'>$class_name</a></td></tr>";
+            } else {
+                echo "<tr class='$row_class'><td></td><td></td><td>$class_name <span class='note'>(ended)</span></td></tr>";
             }
         }
     }
     echo "</table>";
-}
-else
-{
+	
+} else {
     echo "<p>You are not teaching any courses.</p>";
 }
 

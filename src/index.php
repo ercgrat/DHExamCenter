@@ -9,14 +9,20 @@ $user = $_SESSION['user'];
 output_start("", $_SESSION['user']);
 
 echo <<<_CONTENT
-    <h2 style="text-decoration:none">WELCOME</h2>
-    <p>Welcome to DH eXam Center.  This site is a learning resource for students of Computational Methods in the Humanities, a University Honors College course taught
-    by Dr. David J. Birnbaum at the University of Pittsburgh.  Only students of the course will be able to create an account and access the learning materials
-    offered here, but visitors can still view the selection of practice examinations available.</p>
-    <p>The eXam Center is designed to give students a quick self-assessment system that provides immediate testing feedback.  Students can pick from a range of difficulty
-    options and will be given a random selection of questions from the corpus of questions available in the XLearn database.  Then, students can look at their
-    past test results and study their progress.  Tests are offered in a number of XML-based languages, including XML itself, as well as web-based languages pertinent to
-    the practice of "digital humanities."</p>
+    <h2>Welcome to eXam Center!</h2>
+    <p>Welcome to DH eXam Center.  This site is intended as a learning resource for students of digital humanities courses whose instructors would like to provide
+	a responsive, online supplement to their in-class material.  Only students of instructors who sign up with eXam Center will be able to create an account and access
+	the learning materials offered here, but visitors can still view the material created by those courses.</p>
+	<p>See more on the <a href="https://$root/about.php">About</a> page.</p>
+    <h4>Last update</h4>
+    <ul>
+		<li>Version 1.4 - June 8, 2014
+			<ul>
+				<li>Complete UI overhaul.</li>
+				<li>Code redesign and fixing of minor bugs across the site.</li>
+			</ul>
+		</li>
+	</ul>
 _CONTENT;
 
 output_end();

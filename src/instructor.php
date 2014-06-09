@@ -23,10 +23,10 @@ output_start($header, $_SESSION['user']);
 
 echo <<<_HEAD
     <h2>INSTRUCTOR DASHBOARD</h2>
-    <hr/>
 _HEAD;
 
 echo <<<_COURSE1
+	<div class='content_section'>
     <h3>COURSES</h3>
     <div id="courses_table">
 _COURSE1;
@@ -34,8 +34,8 @@ _COURSE1;
 require_once "instructor-fragment-course_table.php";
 
 echo <<<_COURSE2
-    </div>
-    <hr/>
+    </div></div>
+	<div class='content_section'>
     <h3>CREATE A COURSE</h3>
     <form>
         <p id="course_warning"></p>
@@ -58,11 +58,12 @@ echo <<<_COURSE3
         </table>
     </form>
     <div><button id="course_button">Create Course</button><span></span></div>
+	</div>
 _COURSE3;
 
 echo <<<_CLASS1
-    <hr/>
-    <h3>START A COURSE SESSION</h3>
+	<div class='content_section'>
+    <h3>START A CLASS SESSION</h3>
     <form>
         <p id="class_warning"></p>
         <table>
@@ -77,6 +78,7 @@ echo <<<_CLASS2
         </table>
     </form>
     <div><button id="class_button">Start Class</button><span class="warning"></span></div>
+	</div>
 _CLASS2;
 
 output_end();
