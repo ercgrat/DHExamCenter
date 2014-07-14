@@ -57,7 +57,7 @@ echo <<<_COURSE3
             <tr><td>Course Title: </td><td><input id="course_input" type="text" size="60" maxlength="256"/><span class="warning"></span></td>
         </table>
     </form>
-    <div><button id="course_button">Create Course</button><span></span></div>
+    <div><button id="course_button" class="submit_type">Create Course</button><span></span></div>
 	</div>
 _COURSE3;
 
@@ -77,7 +77,7 @@ echo <<<_CLASS2
             <tr><td>Class Name:</td><td><input id="class_input" type="text" size="40" maxlength="32"/><span class="warning"></span></td>
         </table>
     </form>
-    <div><button id="class_button">Start Class</button><span class="warning"></span></div>
+    <div><button id="class_button" class="submit_type">Start Class</button><span class="warning"></span></div>
 	</div>
 _CLASS2;
 

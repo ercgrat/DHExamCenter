@@ -1,0 +1,17 @@
+svg {
+	display:inline;
+	width:80px;
+	height:70px;
+}
+
+table {
+	width:95%;
+}
+
+button {
+	width:100%;
+}
+
+button:hover {
+	cursor:pointer;
+}

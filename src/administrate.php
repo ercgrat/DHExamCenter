@@ -23,7 +23,6 @@ output_start($header, $_SESSION['user']);
 
 echo <<<_HEAD
     <h2>ADMIN DASHBOARD</h2>
-    <hr/>
 _HEAD;
 
 echo <<<_DATA1
@@ -46,7 +45,6 @@ echo <<<_DATA3
 _DATA3;
 
 echo <<<_INSTR1
-    <hr/>
     <h3>ADD AN INSTRUCTOR</h3>
     <form>
         <table>
@@ -61,7 +59,6 @@ echo <<<_INSTR2
         </table>
     </form>
     <div><button id="instructor_button">Add Instructor</button><span></span></div>
-    <hr/>
 _INSTR2;
     
 echo <<<_INSTI

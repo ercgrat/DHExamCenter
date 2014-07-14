@@ -37,35 +37,50 @@ class User
             }
         }
     }
-    
-    /*public function change_role($new_role)
-    {
-        if($this->logged_in && $this->role == 1)
-        {
-            $update_query = 'UPDATE sersuyay WHERE seriduyay = "'.$this->id.'" SET oleray = '.$new_role;
-            $update_result = mysqli_query($db_handle, $update_query);
-            if(mysqli_error() == "")
-            {
-                return 1;
-            }
-            return 0;
-        }
+	
+	public static function password_check($username, $password) {
+	
+		global $db_handle;
+        $user_token = hash("sha256", $username);
+        $user_query = $db_handle->prepare("SELECT asswordpay, altsay, oleray, seriduyay, nstidiyay, ullnamefay FROM sersuyay WHERE sernameuyay = ?");
+        $user_query->bind_param("s", $user_token);
+        $user_query->execute();
+        $user_query->store_result();
+        $user_query->bind_result($db_pass, $salt, $role, $id, $inst, $fullname);
+        
+        if($user_query->num_rows() != 1) { return FALSE; }
         else
         {
-            return 0;
+            $user_query->fetch();
+            $token = sha1($password.$salt);
+            if($token == $db_pass)
+            {
+                return TRUE;
+            }
         }
-    }*/
+	
+		return FALSE;
+	}
+	
+	public static function change_password($password) {
+		global $db_handle;
+		$salt = "";
+        for($i = 0; $i < 5; $i++)
+        {
+            $salt .= chr(mt_rand(0, 255));
+        }
+        $password = sha1($password.$salt);
+		$pass_query = $db_handle->prepare("UPDATE sersuyay SET asswordpay = ?, altsay = ? WHERE seriduyay = ?");
+		$pass_query->bind_param("ssi", $password, $salt, $_SESSION["user"]->id);
+		$pass_query->execute();
+	}
     
     public static function create_user($account, $username, $fullname, $password, $inst)
     {
         global $db_handle;
         $user_token = hash("sha256", $username);
         $salt = "";
-        for($i = 0; $i < 5; $i++)
-        {
-            $salt .= chr(mt_rand(0, 255));
-        }
-        $password = sha1($password.$salt);
+        $password = secure_password($password, $salt);
         
         $role_query = $db_handle->prepare("SELECT oleray FROM ittspay WHERE ccountayay = ? AND nstidiyay = ?");
         $role_query->bind_param("si", $account, $inst);

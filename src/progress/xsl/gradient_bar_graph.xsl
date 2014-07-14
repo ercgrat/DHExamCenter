@@ -5,13 +5,13 @@
         <xsl:variable name="origin_x">70</xsl:variable>
         <xsl:variable name="origin_y">230</xsl:variable>
         <xsl:variable name="height" select="$origin_y - 15"/>
-        <xsl:variable name="width" select="350"/>
+        <xsl:variable name="width" select="600"/>
         <xsl:variable name="count" select="count(object)"/>
         <xsl:variable name="bar_margin" select="10"/>
         <xsl:variable name="bar_width" select="($width - (($count + 1)*$bar_margin)) div $count"/>
         <xsl:variable name="y_axis_text_offset" select="22"/>
         
-        <svg class="bar_chart" height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <svg class="bar_chart" height="300px" width="500px" viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg">
             <line stroke="darkgrey" x1="{$origin_x}" y1="{$origin_y - $height*.25}" x2="{$origin_x+$width}" y2="{$origin_y - $height*.25}"/>
             <line stroke="darkgrey" x1="{$origin_x}" y1="{$origin_y - $height*.5}" x2="{$origin_x+$width}" y2="{$origin_y - $height*.5}"/>
             <line stroke="darkgrey" x1="{$origin_x}" y1="{$origin_y - $height*.75}" x2="{$origin_x+$width}" y2="{$origin_y - $height*.75}"/>
@@ -44,12 +44,12 @@
                     <xsl:variable name="bar_x" select="$origin_x + (($preceding_count+1)*$bar_margin)+ ($preceding_count*$bar_width)"/>
                     <xsl:variable name="bar_height" select="$height*@ratio"/>
                     <xsl:if test="number(@ratio) = 0">
-                        <rect stroke="none" rx="1" ry="1" stroke-width="1" fill="url(#grad1)" x="{$bar_x}" y="{$origin_y - 5}" width="{$bar_width}" height="{5}">
+                        <rect data-identifier="{@identifier}" stroke="none" rx="1" ry="1" stroke-width="1" fill="url(#grad1)" x="{$bar_x}" y="{$origin_y - 5}" width="{$bar_width}" height="{5}">
                             <title><xsl:value-of select="current()"/></title>
                         </rect>
                     </xsl:if>
                     <xsl:if test="not(number(@ratio) = 0)">
-                        <rect stroke="none" rx="1" ry="1" stroke-width="1" fill="url(#grad1)" x="{$bar_x}" y="{$origin_y - $bar_height}" width="{$bar_width}" height="{$bar_height}">
+                        <rect data-identifier="{@identifier}" stroke="none" rx="1" ry="1" stroke-width="1" fill="url(#grad1)" x="{$bar_x}" y="{$origin_y - $bar_height}" width="{$bar_width}" height="{$bar_height}">
                             <title><xsl:value-of select="current()"/></title>
                         </rect>
                     </xsl:if>
@@ -58,17 +58,8 @@
             
             <line stroke="black" x1="{$origin_x}" y1="{$origin_y}" x2="{$origin_x}" y2="{$origin_y - $height}"/>
             <line stroke="black" x1="{$origin_x}" y1="{$origin_y}" x2="{$origin_x + $width}" y2="{$origin_y}"/>
-            <line stroke="black" x1="{$origin_x + 105}" y1="{$origin_y + 20}" x2="{$origin_x + $width - 105}" y2="{$origin_y + 20}"/>
-            <foreignObject style="overflow:visible" x="{$origin_x + 10}" y="{$origin_y + 10}" width="100" height="100">
-                <body xmlns="http://www.w3.org/1999/xhtml">
-                    <p style="font-family:sans-serif;font-size:10px">Most frequently answered</p>
-                </body>
-            </foreignObject>
-            <foreignObject style="overflow:visible" x="{$origin_x + $width - 95}" y="{$origin_y + 10}" width="100" height="100">
-                <body xmlns="http://www.w3.org/1999/xhtml">
-                    <p style="font-family:sans-serif;font-size:10px">Least frequently answered</p>
-                </body>
-            </foreignObject>
+            <text style="overflow:visible" font-size="10px" x="{$origin_x + 10}" y="{$origin_y + 15}" width="100" height="100">Most frequently answered</text>
+            <text style="overflow:visible" font-size="10px" x="{$origin_x + $width - 128}" y="{$origin_y + 15}" width="100" height="100">Least frequently answered</text>
         </svg>
     </xsl:template>
 </xsl:stylesheet>

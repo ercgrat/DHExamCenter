@@ -23,19 +23,22 @@ function tag_init()
 function delete_question (event)
 {
     event.stopPropagation();
-    var questionid = this.previousElementSibling.value;
-    if(isNaN(questionid)) { return; }
-    
-    var getString = "tag-delete_question.php?id=" + questionid;
-    var req = new XMLHttpRequest();
-    req.onreadystatechange = function () {
-        if(req.readyState == 4 && req.status == 200)
-        {
-            location.reload();
-        }
-    }
-    req.open("GET", getString, false);
-    req.send();
+	var confirmation = confirm("Are you sure you want to delete this question?");
+	if(confirmation) {
+		var questionid = this.previousElementSibling.value;
+		if(isNaN(questionid)) { return; }
+		
+		var getString = "tag-delete_question.php?id=" + questionid;
+		var req = new XMLHttpRequest();
+		req.onreadystatechange = function () {
+			if(req.readyState == 4 && req.status == 200)
+			{
+				location.reload();
+			}
+		}
+		req.open("GET", getString, false);
+		req.send();
+	}
 }
 
 function deselect_question ()

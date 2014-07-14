@@ -14,6 +14,8 @@ if(!$_SESSION['user']->logged_in)
 }
 
 $header = "<link rel='stylesheet' type='text/css' href='progress.css'></link>";
+$header .= "<script type='text/javascript'>var _progressQuestionUrl = \"" . $_SERVER["HTTP_HOST"] . "/progress/question/\";</script>";
+$header .= "<script type='text/javascript' src='progress.js'></script>";
 output_start($header, $_SESSION['user']);
 echo "<h2>Progress</h2>";
 

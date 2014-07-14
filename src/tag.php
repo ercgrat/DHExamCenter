@@ -61,7 +61,6 @@ output_start($header, $_SESSION["user"]);
 echo <<<_HEAD
     <h2>Questions with Tag "$tag_name"</h2>
     <h3><a class="title" href="course.php?id=$courseid">$course_title</a></h3>
-    <hr/>
     <h4>Select a Question to Edit</h4>
     <div id="review_question_container">
 _HEAD;

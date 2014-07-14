@@ -15,6 +15,6 @@ if(isset($user) && $user->logged_in)
     session_destroy();
 }
 
-header("Location: https://". $_SERVER["HTTP_HOST"] . "/index.php");
+header("Location: https://". $_SERVER["HTTP_HOST"] . "/user_login.php");
 
 ?>

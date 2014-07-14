@@ -29,7 +29,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) // Check for form sub
 {
     $_SESSION['user'] = new User();
     $user = $_SESSION['user'];
-    $user->login(sanitizeMySQL($_POST['username']), sanitizeMySQL($_POST['password']));
+    $user->login($_POST['username'], $_POST['password']);
 
     if($user->logged_in) // On successful login, redirect to the last page visited if set, or to the home page.
     {
@@ -57,7 +57,11 @@ else if(!isset($_SESSION['user']) || !$_SESSION['user']->logged_in) // If no for
 }
 else // If the user is already logged in, redirect to the last page visited if set, or to the home page.
 {
-    if(isset($_SESSION['redirect'])) { headers("Location: https://". $_SERVER["HTTP_HOST"] .$_SESSION['redirect']); }
+    if(isset($_SESSION['redirect'])) {
+		$redirect = $_SESSION['redirect'];
+		$_SESSION['redirect'] = NULL;
+		header("Location: https://".$_SERVER["HTTP_HOST"].$redirect);
+	}
     else { header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php"); }
     exit();
 }

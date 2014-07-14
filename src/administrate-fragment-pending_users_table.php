@@ -31,7 +31,7 @@ function role_string($role)
     }
 }
 
-$pend_query = $db_handle->prepare("SELECT amenay, oleray, ccountayay FROM nstiyay, ittspay WHERE nstiyay.nstidiyay = ittspay.nstidiyay AND ittspay.wneroyay = ? GROUP BY amenay, ccountayay");
+$pend_query = $db_handle->prepare("SELECT amenay, oleray, ccountayay FROM nstiyay, ittspay WHERE nstiyay.nstidiyay = ittspay.nstidiyay AND ittspay.wneroyay = ? AND oleray = 1 GROUP BY amenay, ccountayay");
 $pend_query->bind_param("i", $_SESSION['user']->id);
 if(!$pend_query->execute()) { output_runtime_error("Problem retrieving pending users."); }
 $pend_query->store_result();
@@ -41,7 +41,7 @@ if($pend_query->num_rows() > 0)
     $pend_query->fetch();
     $current_inst = $inst;
     
-    echo "<table><tr><td>$inst</td><td>$account</td><td>".role_string($role)."</td></tr>";
+    echo "<table class='information'><tr><th>Institution</th><th>Account</th><th>Role</th></tr><tr><td>$inst</td><td>$account</td><td>".role_string($role)."</td></tr>";
     while($pend_query->fetch())
     {
         if($inst != $current_inst)
@@ -58,7 +58,7 @@ if($pend_query->num_rows() > 0)
 }
 else
 {
-    echo "<p>There are no pending user invitations.</p>";
+    echo "<p>There are no pending faculty invitations.</p>";
 }
 
 ?>

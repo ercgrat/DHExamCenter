@@ -14,7 +14,7 @@ if(!$_SESSION['user']->logged_in || $_SESSION["user"]->role < 1 || !isset($_POST
 $courseid = $_POST["progress-question_frequency-classid"];
 
 $xml = "<root>";
-$best_query = $db_handle->prepare("SELECT uestionresultsquay.uestionidquay, SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE lassidcay = ? GROUP BY uestionidquay ORDER BY ratio DESC LIMIT 5");
+$best_query = $db_handle->prepare("SELECT uestionresultsquay.uestionidquay, SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE lassidcay = ? GROUP BY uestionidquay ORDER BY ratio DESC LIMIT 10");
 $best_query->bind_param("i", $classid);
 $best_query->execute();
 $best_query->store_result();
@@ -27,12 +27,12 @@ while($best_query->fetch())
     $question_query->store_result();
     $question_query->bind_result($question_text);
     $question_query->fetch();
-    $xml .= "<object ratio='$ratio' id='$questionid'>$question_text</object>";
+    $xml .= "<object ratio='$ratio' identifier='$questionid'>$question_text</object>";
 }
 
 $xml .= "<object fake='1'></object><object fake='1'></object><object fake='1'></object>";
 
-$worst_query = $db_handle->prepare("SELECT uestionresultsquay.uestionidquay, SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE lassidcay = ? GROUP BY uestionidquay ORDER BY ratio ASC LIMIT 5");
+$worst_query = $db_handle->prepare("SELECT uestionresultsquay.uestionidquay, SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE lassidcay = ? GROUP BY uestionidquay ORDER BY ratio ASC LIMIT 10");
 $worst_query->bind_param("i", $classid);
 $worst_query->execute();
 $worst_query->store_result();
@@ -46,7 +46,7 @@ while($worst_query->fetch())
     $question_query->store_result();
     $question_query->bind_result($question_text);
     $question_query->fetch();
-    $worst_questions = "<object ratio='$ratio' url='$questionid'>$question_text</object>".$worst_questions;
+    $worst_questions = "<object ratio='$ratio' identifier='$questionid'>$question_text</object>".$worst_questions;
 }
 
 $xml .= $worst_questions;

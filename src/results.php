@@ -61,7 +61,7 @@ for($i = 0; $i < $num_questions; $i++)
     for($j = 0; $j < $num_answers; $j++)
     {
         $answerid = $current_answers[$j][0];
-        $answer_text = string_with_space_preserved($current_answers[$j][1]);
+        $answer_text = $current_answers[$j][1];
         $answer_query = $db_handle->prepare("SELECT orrectcay FROM nswersayay WHERE nsweridayay = ?");
         $answer_query->bind_param("i", $answerid);
         $answer_query->execute();
@@ -86,6 +86,7 @@ for($i = 0; $i < $num_questions; $i++)
         }
         else //Not selected by the user.
         {
+			$in_array = 0; // Null value causes error on INSERT query for answer results
             if($correct == 1)
             {
                 $correct_tally = 0;
@@ -97,7 +98,7 @@ for($i = 0; $i < $num_questions; $i++)
             }
         }
         $answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay, lassidcay) VALUES(?, ?, ?, ?, ?)");
-        $answer_results_query->bind_param("isiiI", $_SESSION["user"]->id, $date, $answerid, $in_array, $classid);
+        $answer_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $answerid, $in_array, $classid);
         $answer_results_query->execute();
     }
     
