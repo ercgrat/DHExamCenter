@@ -19,13 +19,13 @@ if($questionid == 0) {
 }
 
 if($_SESSION["user"]->role == 2) {
-	$question_query = $db_handle->prepare("SELECT uestiontextquay, xplanationeyay FROM uestionsquay WHERE uestionidquay = ?");
+	$question_query = $db_handle->prepare("SELECT DISTINCT uestionsquay.uestiontextquay, uestionsquay.xplanationeyay, oursescay.ourseidcay FROM uestionsquay JOIN aglinkstay ON uestionsquay.uestionidquay = aglinkstay.uestionidquay JOIN agstay ON aglinkstay.agidtay = agstay.agidtay JOIN oursescay ON agstay.ourseidcay = oursescay.ourseidcay WHERE uestionsquay.uestionidquay = ?");
 	$question_query->bind_param("i", $questionid);
 } else if ($_SESSION["user"]->role == 1) {
-	$question_query = $db_handle->prepare("SELECT uestiontextquay, xplanationeyay FROM uestionsquay JOIN aglinkstay ON uestionsquay.uestionidquay = aglinkstay.uestionidquay JOIN agstay ON aglinkstay.agidtay = agstay.agidtay JOIN oursescay ON agstay.ourseidcay = oursescay.ourseidcay WHERE uestionsquay.uestionidquay = ? AND oursescay.seriduyay = ?");
+	$question_query = $db_handle->prepare("SELECT DISTINCT uestionsquay.uestiontextquay, uestionsquay.xplanationeyay, oursescay.ourseidcay FROM uestionsquay JOIN aglinkstay ON uestionsquay.uestionidquay = aglinkstay.uestionidquay JOIN agstay ON aglinkstay.agidtay = agstay.agidtay JOIN oursescay ON agstay.ourseidcay = oursescay.ourseidcay WHERE uestionsquay.uestionidquay = ? AND oursescay.seriduyay = ?");
 	$question_query->bind_param("ii", $questionid, $_SESSION["user"]->id);
 } else { // role == 0
-	$question_query = $db_handle->prepare("SELECT uestiontextquay, xplanationeyay FROM uestionsquay JOIN aglinkstay ON uestionsquay.uestionidquay = aglinkstay.uestionidquay JOIN agstay ON aglinkstay.agidtay = agstay.agidtay JOIN lassescay ON agstay.ourseidcay = lassescay.ourseidcay JOIN lasslinkscay ON lassescay.lassidcay = lasslinkscay.lassidcay WHERE uestionsquay.uestionidquay = ? AND lasslinkscay.seriduyay = ?");
+	$question_query = $db_handle->prepare("SELECT DISTINCT uestionsquay.uestiontextquay, uestionsquay.xplanationeyay FROM uestionsquay JOIN aglinkstay ON uestionsquay.uestionidquay = aglinkstay.uestionidquay JOIN agstay ON aglinkstay.agidtay = agstay.agidtay JOIN lassescay ON agstay.ourseidcay = lassescay.ourseidcay JOIN lasslinkscay ON lassescay.lassidcay = lasslinkscay.lassidcay WHERE uestionsquay.uestionidquay = ? AND lasslinkscay.seriduyay = ?");
 	$question_query->bind_param("ii", $questionid, $_SESSION["user"]->id);
 }
 $question_query->execute();
@@ -41,9 +41,14 @@ $header.= "var _progressQuestionDeleteUrl = \"". $_SERVER["HTTP_HOST"] ."/tag-de
 $header.= "var _progressQuestionTagUrl = \"". $_SERVER["HTTP_HOST"] ."/tag.php\";</script>";
 $header.= "<script type='text/javascript' src='progress-question.js'></script>";
 output_start($header, $_SESSION['user']);
-echo "<h2>Progress</h2>";
+echo "<h2><a class='title2' href='https://".$_SERVER["HTTP_HOST"]."/progress.php'>Progress</a></h2>";
 
-$question_query->bind_result($question_text, $explanation);
+if($_SESSION["user"]->role > 0) {
+	$question_query->bind_result($question_text, $explanation, $courseid);
+	$_SESSION["course-courseid"] = $courseid;
+} else {
+	$question_query->bind_result($question_text, $explanation);
+}
 $question_query->fetch();
 
 $question_text = string_with_space_preserved($question_text);
@@ -54,7 +59,7 @@ $answer_query->bind_param("i", $questionid);
 $answer_query->execute();
 $answer_query->store_result();
 $answer_query->bind_result($answerid, $answer_text, $correct);
-echo "<p>ANSWERS:</p><table>";
+echo "<p>ANSWERS:</p><table class='information'><tr><th>Correct</th><th>Answer</th><th>Accuracy</th></tr>";
 while($answer_query->fetch()) {
 
 	$results_query = $db_handle->prepare("SELECT (SELECT COUNT(*) FROM nswerresultsayay WHERE nsweridayay = ? AND electedsay = ?)/(SELECT COUNT(*) FROM nswerresultsayay WHERE nsweridayay = ?)");

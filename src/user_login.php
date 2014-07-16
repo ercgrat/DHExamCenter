@@ -17,7 +17,9 @@ function output_login_form($redirect = NULL)
                 <tr><td><input type="submit"/></td></tr>
             </table>
         </form>
+		<p/>
         <p>New user? <a href="user_create.php">Create an account.</a></p>
+		<p>Forget your password? <a href="user_password_reset.php">Request a password reset.</a></p>
     </div>
 _FORM;
 }

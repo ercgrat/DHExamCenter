@@ -12,7 +12,7 @@ if(!$_SESSION["user"]->logged_in)
     exit();
 }
 
-if(!$_SESSION["user"]->password_check($_SESSION["user"]->username, $_POST['oldpass'])) {
+if(!$_SESSION["user"]->password_check($_SESSION["user"]->id, $_POST['oldpass'])) {
 	echo "0,The old password entered did not match your current password.";
 	exit();
 }
@@ -27,9 +27,8 @@ if(strlen($_POST["newpass1"]) < 8 || strlen($_POST["newpass1"]) > 35) {
 	exit();
 }
 
-$salt = "";
 $password = $_POST["newpass1"];
-$_SESSION["user"]->change_password($password);
+User::change_password($_SESSION["user"]->id, $password);
 echo "1,Your password has been changed successfully!";
 
 ?>

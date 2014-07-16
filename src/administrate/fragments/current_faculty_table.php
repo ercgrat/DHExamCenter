@@ -1,6 +1,6 @@
 <?php //administrate-fragment-current_faculty_table.php
-require_once "authenticate.php";
-require_once "login.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/authenticate.php";
+require_once $_SERVER["DOCUMENT_ROOT"]."/login.php";
 
 session_start();
 session_regenerate_id();

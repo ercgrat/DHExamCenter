@@ -51,7 +51,7 @@ _PART2;
                     <li onclick="window.location.assign('https://$root/about.php')"><img src='https://$root/nav_about.png' alt='[ ]'/><a href="https://$root/about.php">About</a></li>
 _PART3;
 
-    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location.assign(\"https://$root/administrate.php\")'><img src='https://$root/nav_admin.png' alt='[ ]'/><a href='https://$root/administrate.php'>Administrator</a></li>"; }
+    if($user->logged_in && $user->role >= 2) { echo "<li onclick='window.location.assign(\"https://$root/administrate\")'><img src='https://$root/nav_admin.png' alt='[ ]'/><a href='https://$root/administrate'>Administrator</a></li>"; }
     if($user->logged_in && $user->role >= 1) { echo "<li onclick='window.location.assign(\"https://$root/instructor.php\")'><img src='https://$root/nav_dashboard.png' alt='[ ]'/><a href='https://$root/instructor.php'>Instructor</a></li>"; }
     if($user->logged_in && $user->role == 0) { echo "<li onclick='window.location.assign(\"https://$root/student.php\")'><img src='https://$root/nav_dashboard.png' alt='[ ]'/><a href='https://$root/student.php'>Student</a></li>"; }
 

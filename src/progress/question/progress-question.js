@@ -11,7 +11,6 @@ function progress_question_init() {
 }
 
 function editButtonClicked() {
-	alert("https://" + _progressQuestionEditUrl + "?id=" + this.dataset.identifier);
 	window.location.href = "https://" + _progressQuestionEditUrl + "?id=" + this.dataset.identifier;
 }
 

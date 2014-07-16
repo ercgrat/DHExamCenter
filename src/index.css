@@ -295,7 +295,7 @@ td, th {
     padding:8px;
 }
 
-table.information, table.form {
+table.information, .form {
 	font-family:Verdana, Helvetica, Arial, Sans-serif;
 	font-size: .9em;
 	border-spacing:0px;
@@ -303,8 +303,11 @@ table.information, table.form {
 table.information  {
 	border-collapse:separate;
 }
-table.form {
+.form {
 	border:1px solid #DDDDDD;
+}
+.form td:nth-child(1) {
+	text-align:right;
 }
 table.information th {
 	color:white;
@@ -323,7 +326,4 @@ table.information tr.variation1 td {
 }
 table.information tr.variation2 td {
 	background-color:#F3DBD9;
-}
-table.form th, table.form td {
-	text-align:right;
 }

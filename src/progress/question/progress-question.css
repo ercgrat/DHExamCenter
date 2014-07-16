@@ -4,8 +4,12 @@ svg {
 	height:70px;
 }
 
-table {
-	width:95%;
+td, th{
+	min-width: 50px;
+	text-align: center;
+}
+td:nth-child(2), th:nth-child(2) {
+	text-align:left;
 }
 
 button {

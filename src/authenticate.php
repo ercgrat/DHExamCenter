@@ -38,15 +38,15 @@ class User
         }
     }
 	
-	public static function password_check($username, $password) {
+	public static function password_check($userid, $password) {
 	
 		global $db_handle;
         $user_token = hash("sha256", $username);
-        $user_query = $db_handle->prepare("SELECT asswordpay, altsay, oleray, seriduyay, nstidiyay, ullnamefay FROM sersuyay WHERE sernameuyay = ?");
-        $user_query->bind_param("s", $user_token);
+        $user_query = $db_handle->prepare("SELECT asswordpay, altsay FROM sersuyay WHERE seriduyay = ?");
+        $user_query->bind_param("i", $userid);
         $user_query->execute();
         $user_query->store_result();
-        $user_query->bind_result($db_pass, $salt, $role, $id, $inst, $fullname);
+        $user_query->bind_result($db_pass, $salt);
         
         if($user_query->num_rows() != 1) { return FALSE; }
         else
@@ -62,7 +62,19 @@ class User
 		return FALSE;
 	}
 	
-	public static function change_password($password) {
+	public static function get_id_for_username($username) {
+		global $db_handle;
+		$user_token = hash("sha256", $username);
+		$user_query = $db_handle->prepare("SELECT seriduyay FROM sersuyay WHERE sernameuyay = ?");
+		$user_query->bind_param("s", $user_token);
+		$user_query->execute();
+		$user_query->store_result();
+		$user_query->bind_result($userid);
+		$user_query->fetch();
+		return $userid;
+	}
+	
+	public static function change_password($userid, $password) {
 		global $db_handle;
 		$salt = "";
         for($i = 0; $i < 5; $i++)
@@ -71,7 +83,7 @@ class User
         }
         $password = sha1($password.$salt);
 		$pass_query = $db_handle->prepare("UPDATE sersuyay SET asswordpay = ?, altsay = ? WHERE seriduyay = ?");
-		$pass_query->bind_param("ssi", $password, $salt, $_SESSION["user"]->id);
+		$pass_query->bind_param("ssi", $password, $salt, $userid);
 		$pass_query->execute();
 	}
     
