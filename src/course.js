@@ -1,6 +1,26 @@
 function course_init ()
 {
-    document.getElementById("resource_button").onclick = add_resource;
+    document.getElementById("resource_button").addEventListener("click", add_resource, true);
+	document.getElementById("tags_button").addEventListener("click", searchQuestions, true);
+}
+
+function searchQuestions() {
+
+	var tagItems = document.getElementById("tags_table").getElementsByClassName("tag_item");
+	var tagIdentifiers = new Array();
+	for(var i = 0; i < tagItems.length; i++) {
+		if(tagItems[i].dataset.selected == "1") {
+			tagIdentifiers.push(tagItems[i].dataset.tagid);
+		}
+	}
+	// Construct form to submit data while redirecting
+	var tagIdentifierString = tagIdentifiers.join(',');
+	var formString = "<form method='POST' action='tag.php'><input type='hidden' name='tagids' value='" + tagIdentifierString + "'></input></form>";
+	var formDiv = document.createElement("div");
+	formDiv.innerHTML = formString;
+	document.body.appendChild(formDiv);
+	formDiv.firstChild.submit();
+    
 }
 
 function reload_resources()

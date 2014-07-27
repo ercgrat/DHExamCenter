@@ -18,7 +18,7 @@ else if ($_SESSION["user"]->role != 0)
     exit();
 }
 
-$header = "<script type='text/javascript' src='student.js'></script>";
+$header = "<script type='text/javascript' src='course-fragment-tags_table.js'></script>";
 output_start($header, $_SESSION["user"]);
 
 $inst_query = $db_handle->prepare("SELECT amenay FROM nstiyay WHERE nstidiyay = ?");
@@ -110,7 +110,6 @@ if($course_query->num_rows() == 0) {
 
 				echo "<form method='post' action='exam.php'>";
 				$_SESSION["course-courseid"] = $courseid;
-				$_POST["student"] = 1;
 				require "course-fragment-tags_table.php";
 				$_SESSION["course-courseid"] = NULL;
 				echo "<input class='submit_type' type='submit' value='Start Exam'/>";

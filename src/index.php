@@ -16,10 +16,11 @@ echo <<<_CONTENT
 	<p>See more on the <a href="https://$root/about.php">About</a> page.</p>
     <h4>Last update</h4>
     <ul>
-		<li>Version 1.4 - June 8, 2014
+		<li>Version 1.5 - July 16, 2014
 			<ul>
-				<li>Complete UI overhaul.</li>
-				<li>Code redesign and fixing of minor bugs across the site.</li>
+				<li>Progress feature expanded to include answer-level results for each question. This additional result data is now collected when students answer questions.</li>
+				<li>A password reset request feature was added.</li>
+				<li>Question rendering issues were fixed.</li>
 			</ul>
 		</li>
 	</ul>

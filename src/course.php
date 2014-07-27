@@ -34,8 +34,9 @@ if($_SESSION['user']->role == 0)
 }
 
 $header = '<script type="text/javascript" src="course.js"></script>';
-$header .= '<script type="text/javascript" src="question.js"></script>';
-$header .= '<link rel="stylesheet" type="text/css" href="course.css"/>';
+$header.= '<script type="text/javascript" src="question.js"></script>';
+$header.= '<script type="text/javascript" src="course-fragment-tags_table.js"></script>';
+$header.= '<link rel="stylesheet" type="text/css" href="course.css"/>';
 output_start($header, $_SESSION["user"]);
 
 $root = $_SERVER["HTTP_HOST"];
@@ -105,22 +106,25 @@ echo <<<_BODY2
         <img src="minus.png" id="remover" alt="[REMOVE ANSWER]"/>
         <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea"></textarea></label>
     </form>
-    <p><button id="question_button">Add Question</button> <span></span></p>
+    <button id="question_button" class="submit_type">Add Question</button><span></span>
     </div></div>
     <h3>Add Resource</h3>
     <table class="form">
         <tr><td>Resource Name:</td><td><input id="resource_name" type="text" size="40" maxlength="256"/> <span class="warning"></span></td></tr>
         <tr><td>URL:</td><td><input id="resource_url" type="text" size="40" maxlength="512" value="http://"/> <span class="warning"></span></td></tr>
     </table>
-    <p><button id="resource_button">Add Resource</button> <span></span></p>
+    <button id="resource_button" class="submit_type">Add Resource</button> <span></span>
     <h3>Corpus</h3>
     <h4>Current Tags</h4>
-    <p>Select a tag to see question results.</p>
+    <p>Search through the question corpus by selecting any number of tags.</p>
     <div id="tags_table">
 _BODY2;
 
 require_once "course-fragment-tags_table.php";
-echo "</div>";
+echo <<<_BODY3
+		<button id="tags_button" class="submit_type" data-courseid="$courseid">Search Questions</button>
+	</div>
+_BODY3;
 
 output_end();
 

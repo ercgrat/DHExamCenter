@@ -1,7 +1,6 @@
 <?php //user_login.php
 require_once "login.php";
 require_once "authenticate.php";
-require_once "sanitize.php";
 require_once "layout.php";
 
 function output_login_form($redirect = NULL)

@@ -26,17 +26,22 @@ function select_item ()
 		var boxShadowProperty = getSupportedProperty(['boxShadow', 'MozBoxShadow', 'WebkitBoxShadow']) //get appropriate CSS3 box-shadow property
 		dataItem.style[boxShadowProperty] = "1px 2px 1px #00CC00" //set CSS shadow
 
+		dataItem.setAttribute('data-selected', '1');
+		
         var input = document.createElement("input");
         input.type = "hidden";
         input.value = tagid;
         input.name = "tags[]";
         form.lastElementChild.appendChild(input);
+		
     }
     else
     {
         dataItem.style.borderColor = "#808080";
 		var boxShadowProperty = getSupportedProperty(['boxShadow', 'MozBoxShadow', 'WebkitBoxShadow']) //get appropriate CSS3 box-shadow property
 		dataItem.style[boxShadowProperty] = "1px 2px 1px #8A8A8A" //set CSS shadow
+		
+		dataItem.setAttribute('data-selected', '0');
 		
         var inputs = form.lastElementChild.getElementsByTagName("input");
         for(var i = 0; i < inputs.length; i++)

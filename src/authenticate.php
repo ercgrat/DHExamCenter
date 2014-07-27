@@ -1,5 +1,4 @@
 <?php //authenticate.php
-require_once "sanitize.php";
 require_once "login.php";
   
 class User

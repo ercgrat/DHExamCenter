@@ -29,19 +29,11 @@ $tag_query->store_result();
 $tag_query->bind_result($tag, $tagid);
 if($tag_query->num_rows() > 0) {
 
-	if($_SESSION["user"]->role == 0 && isset($_POST["student"])) {
-		echo "<ul class='horizontal_list student_taglist'>";
-	} else {
-		echo "<ul class='horizontal_list'>";
-	}
+	echo "<ul class='horizontal_list selectable_taglist'>";
     
     $table_row = 0;
     while($tag_query->fetch()) {
-        if($_SESSION["user"]->role == 0 && isset($_POST["student"])) {
-			echo "<li class='tag_item horizontal_item' style='display:inline-block'><input type='hidden' value='$tagid'/>$tag</li>";
-		} else {
-			echo "<li class='horizontal_item'><a href=\"tag.php?id=$tagid\">$tag</a></li>";
-		}
+		echo "<li class='tag_item horizontal_item' style='display:inline-block' data-tagid='$tagid'><input type='hidden' value='$tagid'/>$tag</li>";
     }
     echo "</ul>";
 	

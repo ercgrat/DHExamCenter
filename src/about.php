@@ -31,6 +31,13 @@ echo <<<_BODY
     </p>
     <h4>Update Notes</h4>
     <ul>
+		<li>Version 1.5 - July 16, 2014
+			<ul>
+				<li>Progress feature expanded to include answer-level results for each question. This additional result data is now collected when students answer questions.</li>
+				<li>A password reset request feature was added.</li>
+				<li>Question rendering issues were fixed.</li>
+			</ul>
+		</li>
 		<li>Version 1.4 - June 8, 2014
 			<ul>
 				<li>Complete UI overhaul.</li>
