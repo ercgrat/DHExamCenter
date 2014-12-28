@@ -29,10 +29,14 @@ if($title_query->num_rows() != 1) { output_error("", $_SESSION['user'], "Course 
 $title_query->bind_result($course_title);
 $title_query->fetch();
 
-// Insert separate CSS stylesheet and JavaScript script into the header.
-$header = "<link rel='stylesheet' type='text/css' href='exam.css'/>";
-$header.= "<link rel='stylesheet' type='text/css' href='results.css'/>";
+$header = "<link rel='stylesheet' type='text/css' href='results.css'/>";
 output_start($header, $_SESSION['user']);
+
+$XSL = new DOMDocument();
+$XSL->load('progress/xsl/donut_graph.xsl');
+$xslt = new XSLTProcessor();
+$xslt->importStylesheet($XSL);
+
 echo "<h1>$title</h1>";
 
 $evaluation_string = "";
@@ -76,12 +80,12 @@ for($i = 0; $i < $num_questions; $i++)
         {
             if($correct == 1)
             {
-                $question_string .= "<li class='correct selected'><img class='correction' src='correct.png' alt='CORRECT: '/><span>".$answer_text."</span></li>";
+				$question_string .= "<tr><td><img src='correct.png' alt='CORRECT: '/></td><td><img src='correct.png' alt='CORRECT: '/></td><td>$answer_text</td></tr>";
             }
             else
             {
                 $correct_tally = 0;
-                $question_string .= "<li class='incorrect selected'><img class='correction' src='incorrect.png' alt='INCORRECT: '/><span>".$answer_text."</span></li>";
+				$question_string .= "<tr><td><img src='incorrect.png' alt='CORRECT: '/></td><td><img src='correct.png' alt='CORRECT: '/></td><td>$answer_text</td></tr>";
             }
         }
         else //Not selected by the user.
@@ -90,11 +94,11 @@ for($i = 0; $i < $num_questions; $i++)
             if($correct == 1)
             {
                 $correct_tally = 0;
-                $question_string .= "<li class='unselected'><img class='correction' src='correct.png' alt='CORRECT: '/>".$answer_text."</li>";
+                $question_string .= "<tr><td><img src='correct.png' alt='CORRECT: '/></td><td></td><td>$answer_text</td></tr>";
             }
             else
             {
-                $question_string .= "<li class='unselected'><img class='correction' src='incorrect.png' alt='INCORRECT: '/>".$answer_text."</li>";
+                $question_string .= "<tr><td><img src='incorrect.png' alt='CORRECT: '/></td><td></td><td>$answer_text</td></tr>";
             }
         }
         $answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay, lassidcay) VALUES(?, ?, ?, ?, ?)");
@@ -102,21 +106,34 @@ for($i = 0; $i < $num_questions; $i++)
         $answer_results_query->execute();
     }
     
-    $question_string .= "</ul>";
-    if(strlen($explanation) > 0) { $question_string .= "<p><span class='explanation'>Explanation:</span> $explanation</p>"; }
-    $question_string .= "</div>";
     $evaluation_string .= "<div class='question_header'>";
     if($correct_tally == 1) { $evaluation_string .= "<img class='correction_indicator' src='correct.png' alt='CORRECT: '/>"; }
     else { $evaluation_string .= "<img class='correction_indicator' src='incorrect.png' alt='INCORRECT: '/>"; }
     $evaluation_string .= "<h3 class='question_header'>Question $question_no</h3></div>";
     $evaluation_string .= "<div class='question_body'><p class='question'>".$question_text."</p>";
-    $evaluation_string .= "<ul class='correction_list'>";
+    $evaluation_string .= "<table class='information'><tr><th>Correct</th><th>Your response</th><th>Answer text</th></tr>";
     $evaluation_string .= $question_string;
+	$evaluation_string .= "</table>";
+	if(strlen($explanation) > 0) { $evaluation_string .= "<p><span class='explanation'>Explanation:</span> $explanation</p>"; }
     $correct_count += $correct_tally;
     
     $question_results_query = $db_handle->prepare("INSERT INTO uestionresultsquay(seriduyay, imestamptay, uestionidquay, orrectcay, lassidcay) VALUES(?, ?, ?, ?, ?)");
     $question_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $questionid, $correct_tally, $classid);
     $question_results_query->execute();
+	
+	$results_query = $db_handle->prepare("SELECT SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE uestionidquay = ?");
+	$results_query->bind_param("i", $questionid);
+	$results_query->execute();
+	$results_query->store_result();
+	$results_query->bind_result($ratio);
+	$results_query->fetch();
+	$xml = "<root><object ratio='$ratio'>" . ($ratio*100)	. "% of students selected the correct value for this answer.</object></root>";
+	$doc = new DOMDocument();
+	$doc->loadXML($xml);
+	$donut = $xslt->transformToXml($doc);
+	
+	$evaluation_string .= $donut;
+	$evaluation_string .= "</div>";
 }
 
 $percentage = 100*($correct_count/$num_questions);

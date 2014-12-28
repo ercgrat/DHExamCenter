@@ -7,8 +7,8 @@ function output_creation_form($user_len_invalid, $fullname_len_invalid, $pass_le
 {   
     global $db_handle;
     
+	echo '<h2>Create Account</h2>';
     echo '<div id="login">';
-    echo '<h2>Create Account</h2>';
     echo '<form method="post" action="user_create.php">';
     
     $inst_query = $db_handle->prepare("SELECT nstidiyay, amenay FROM nstiyay");
@@ -23,15 +23,15 @@ function output_creation_form($user_len_invalid, $fullname_len_invalid, $pass_le
     }
     echo "</select></label>";
     
-    echo '<label>Invitation username: <span class="warning">*</span> <br/><input type="text" name="account" size="35" maxlength="32" value="'.sanitizeString($_POST['account']).'"/> <span class="note">Must be registered by your instructor.</span></label>';
+    echo '<label>Invitation username: <span class="warning">*</span> <br/><input type="text" name="account" size="35" maxlength="32" value="'.$_POST['account'].'"/> <span class="note">Must be registered by your instructor.</span></label>';
     if($acc_len_invalid) { echo '<p class="warning">Use your unique school username. Your instructor must add your username to their course before you can register.</p>'; }
     if($account_used) { echo '<p class="warning">An account under your institution has already been created using this username. If you have already made an account and forget your password, please contact your instructor.</p>'; }
     if(!$account_exists) { echo '<p class="warning">School username has not been registered by an instructor. Contact your instructor to help set up your account.</p>'; }
-    echo '<br/><label>Username (e.g., jsmith452): <span class="warning">*</span> <br/><input type="text" name="username" size="35" maxlength="30" value="'.sanitizeString($_POST['username']).'"/> <span class="note"> 4-30 characters (a-z, A-Z, 0-9, -, _). Used to login to eXam Center.</span></label>';
+    echo '<br/><label>Username (e.g., jsmith452): <span class="warning">*</span> <br/><input type="text" name="username" size="35" maxlength="30" value="'.$_POST['username'].'"/> <span class="note"> 4-30 characters (a-z, A-Z, 0-9, -, _). Used to login to eXam Center.</span></label>';
     if($user_len_invalid) { echo '<p class="warning">Username should be between 4 and 30 characters.</p>'; }
     if($username_invalid) { echo '<p class="warning">Username can only contain a combination of letters, numbers, hyphens, and underscores.</p>'; }
     if($username_exists) { echo '<p class="warning">Username already taken.</p>'; }
-    echo '<label>Full Name (e.g., John Smith): <br/><input type="text" name="fullname" size="35" maxlength="128" value="'.sanitizeString($_POST['fullname']).'"/></label>';
+    echo '<label>Full Name (e.g., John Smith): <br/><input type="text" name="fullname" size="35" maxlength="128" value="'.$_POST['fullname'].'"/></label>';
     if($fullname_len_invalid) { echo '<p class="warning">Full name should be less than 128 characters.</p>'; }
     echo '<br/><label>Password: <span class="warning">*</span> <br/><input type="password" name="password" size="35" maxlength="35"/> <span class="note"> 8-30 characters</span></label>';
     echo '<label>Confirm Password: <span class="warning">*</span> <br/><input type="password" name="password2" size="35" maxlength="35"/> <span class="note">Passwords must match.</span></label>';
@@ -42,7 +42,7 @@ function output_creation_form($user_len_invalid, $fullname_len_invalid, $pass_le
             <br/>
             <label><span class="warning">* = required field</span></label>
             <br/>
-            <input type="submit" value="Create User"/>
+            <input class="submit_type" type="submit" value="Create User"/>
         </form>
     </div>
 _FORMEND;
@@ -86,11 +86,11 @@ else
 
 if($input_valid)
 {
-    $account = $db_handle->real_escape_string($_POST['account']);
-    $username = $db_handle->real_escape_string($_POST['username']);
-    $fullname = $db_handle->real_escape_string($_POST['fullname']);
-    $password = $db_handle->real_escape_string($_POST['password']);
-    $inst = $db_handle->real_escape_string($_POST['inst']);
+    $account = $_POST['account'];
+    $username = $_POST['username'];
+    $fullname = $_POST['fullname'];
+    $password = $_POST['password'];
+    $inst = $_POST['inst'];
     $user_token = hash("sha256", $username);
     
     $username_query = $db_handle->prepare("SELECT * FROM sersuyay WHERE sernameuyay = ?");
@@ -131,18 +131,17 @@ if($input_valid)
     }
 }
 
+$header = "<link rel='stylesheet' type='text/css' href='user_create.css'/>";
+output_start($header, $_SESSION['user']);
 if(!$input_valid || $username_exists || $account_used || !$account_exists)
 {
-    output_start("", $_SESSION['user']);
     output_creation_form($user_len_invalid, $fullname_len_invalid, $pass_len_invalid, $acc_len_invalid, $username_invalid, $account_used, $account_exists, $username_exists, $passwords_match);
-    output_end();
 }
 else
 {
     $created = User::create_user($account, $username, $fullname, $password, $inst);
-    if($created) { $_SESSION['user_created'] = 1; }
-    else { $_SESSION['user_created'] = 0; }
-    header("Location: https://".  $_SERVER["HTTP_HOST"] . "/user_created.php");
+    if($created) { echo "<p>Your account was successfully created!</p>"; }
+	else { echo "<p>There was an issue creating your account.</p>"; }
 }
-
+output_end();
 ?>

@@ -16,11 +16,24 @@ echo <<<_CONTENT
 	<p>See more on the <a href="https://$root/about.php">About</a> page.</p>
     <h4>Last update</h4>
     <ul>
-		<li>Version 1.5 - July 16, 2014
+		<li>Version 2.0 - September 19, 2014
 			<ul>
-				<li>Progress feature expanded to include answer-level results for each question. This additional result data is now collected when students answer questions.</li>
-				<li>A password reset request feature was added.</li>
-				<li>Question rendering issues were fixed.</li>
+				<li>New features polished and prepared for the new school year.</li>
+				<li>Class-level capabilities have been extended to students with TA status - this includes inviting students and appointing other TA's.</li>
+				<li>The progress page was revamped with brand new features and access to even more information!
+					<ul>
+						<li>The question-specific progress page was added!
+							<ul>
+								<li>Answer-level scores are presented with donut graphs to allow easy assessment of how students respond to each question.</li>
+								<li>Navigation links are available on this page to edit or delete the question, as well as to see other questions with the same tags.</li>
+							</ul>
+						</li>
+						<li>Students can now see their own topic-level score compared to the score of their entire class.</li>
+						<li>TA's now have access to question-level progress information.</li>
+					</ul>
+				</li>
+				<li>The tag page now makes it easier to access any tag and see which ones you are viewing.</li>
+				<li>Minor and major bugs were fixed site-wide.</li>
 			</ul>
 		</li>
 	</ul>

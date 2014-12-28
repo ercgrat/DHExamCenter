@@ -37,18 +37,24 @@ function reload_resources()
     req.send();
 }
 
-function reload_tags()
+function reload_tags(selectedValue)
 {
     var req = new XMLHttpRequest();
-    var getString = "course-fragment-tags_table.php";
+    var url = "course-fragment-tags_table.php";
+	var postString = "";
+	if(arguments.length == 1) {
+		postString = "course-fragment-tag_presentation_selector-option=" + selectedValue;
+	}
     req.onreadystatechange = function () {
         if(req.readyState == 4 && req.status == 200)
         {
             document.getElementById("tags_table").innerHTML = req.responseText;
+			course_init();
         }
     }
-    req.open("GET", getString, false);
-    req.send();
+    req.open("POST", url, false);
+	req.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    req.send(postString);
 }
 
 function add_resource()

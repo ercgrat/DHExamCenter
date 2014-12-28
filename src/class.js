@@ -79,7 +79,8 @@ function add_student()
                 if(response[0] == "2")
                 {
                     reload_students();
-                    reload_student_selector();
+					reload_student_selector();
+                    reload_registered_student_selector();
                 }
             }
         }
@@ -143,7 +144,7 @@ function reload_pending_students()
     req.send();
 }
 
-function reload_student_selector()
+function reload_registered_student_selector()
 {
     var req = new XMLHttpRequest();
     var getString = "class-fragment-registered_student_selector.php";
@@ -167,6 +168,21 @@ function reload_students()
         if(req.readyState == 4 && req.status == 200)
         {
             document.getElementById("student_table").innerHTML = req.responseText;
+        }
+    }
+    req.open("GET", getString, false);
+    req.send();
+}
+
+function reload_student_selector() {
+	var req = new XMLHttpRequest();
+    var getString = "class-fragment-student_selector.php";
+    req.onreadystatechange = function () {
+        if(req.readyState == 4 && req.status == 200)
+        {
+            var selector = document.getElementById("student_selector");
+            var parent = selector.parentNode;
+            parent.innerHTML = req.responseText + "<span class='warning'/>";
         }
     }
     req.open("GET", getString, false);

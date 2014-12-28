@@ -20,20 +20,38 @@ if(isset($_SESSION["class-classid"])) {
     $courseid = $_SESSION["course-courseid"];
 }
 
-$tag_query = $db_handle->prepare("SELECT agnametay, agidtay FROM agstay WHERE ourseidcay = ? ORDER BY agnametay");
+$query_option = 0;
+if(isset($_POST["course-fragment-tag_presentation_selector-option"])) {
+	$query_option = $_POST["course-fragment-tag_presentation_selector-option"];
+	$_SESSION["course-fragment-tag_presentation_selector-option"] = $query_option;
+} else {
+	if(!isset($_SESSION["course-fragment-tag_presentation_selector-option"])) {
+		$_SESSION["course-fragment-tag_presentation_selector-option"] = 0;
+	} else {
+		$query_option = $_SESSION["course-fragment-tag_presentation_selector-option"];
+	}
+}
+
+if($query_option == 0) {
+	$tag_query = $db_handle->prepare("SELECT agnametay, agidtay as tagid, (SELECT COUNT(*) FROM aglinkstay WHERE agidtay = tagid) FROM agstay WHERE ourseidcay = ? ORDER BY agnametay");
+} else if($query_option == 1) {
+	$tag_query = $db_handle->prepare("SELECT agnametay, agidtay as tagid, (SELECT COUNT(*) FROM aglinkstay WHERE agidtay = tagid) as tally FROM agstay WHERE ourseidcay = ? ORDER BY tally");
+} else {
+	$tag_query = $db_handle->prepare("SELECT agnametay, agidtay as tagid, (SELECT COUNT(*) FROM aglinkstay WHERE agidtay = tagid) as tally FROM agstay WHERE ourseidcay = ? ORDER BY tally DESC");
+}
 $tag_query->bind_param("i", $courseid);
 if(!$tag_query->execute()) {
 	exit();
 }
 $tag_query->store_result();
-$tag_query->bind_result($tag, $tagid);
+$tag_query->bind_result($tag, $tagid, $question_count);
 if($tag_query->num_rows() > 0) {
 
 	echo "<ul class='horizontal_list selectable_taglist'>";
     
     $table_row = 0;
     while($tag_query->fetch()) {
-		echo "<li class='tag_item horizontal_item' style='display:inline-block' data-tagid='$tagid'><input type='hidden' value='$tagid'/>$tag</li>";
+		echo "<li class='tag_item horizontal_item' style='display:inline-block' data-tagid='$tagid'><input type='hidden' value='$tagid'/>$tag ($question_count)</li>";
     }
     echo "</ul>";
 	

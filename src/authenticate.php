@@ -91,7 +91,7 @@ class User
         global $db_handle;
         $user_token = hash("sha256", $username);
         $salt = "";
-        $password = secure_password($password, $salt);
+        $password = sha1($password.$salt);
         
         $role_query = $db_handle->prepare("SELECT oleray FROM ittspay WHERE ccountayay = ? AND nstidiyay = ?");
         $role_query->bind_param("si", $account, $inst);
@@ -134,13 +134,15 @@ class User
             $link_query = $db_handle->prepare("INSERT INTO lasslinkscay (lassidcay, seriduyay, oleray) VALUES(?, ?, ?)");
             $link_query->bind_param("iii", $classid, $userid, $role);
             $link_query->execute();
+			
         }
         
         $account_query = $db_handle->prepare("DELETE FROM ittspay WHERE ccountayay = ?");
         $account_query->bind_param("s", $account);
         $account_query->execute();
-
+		
         return 1;
     }
+	
 }
 ?>

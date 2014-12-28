@@ -1,14 +1,9 @@
 PRE-FALL GOALS
-2. Include the question and answer-level statistics on the results page
-when a student finishes an exam.
 3. Let instructors view the results of individuals, in different contexts.
 4. Let students view their individual results (currently they're only
 seeing class-level donut graphs).
 5. Add links to the question-level results page from the instructor
 question search.
-
-Course Page
-	- allow selecting of multiple tags for question searching
 
 Class page
 	- alphabetize pending student table
@@ -20,10 +15,8 @@ Progress Page
 	- add whole-class and individual tag success to student view
 	- add individual student view to instructor view
 
-Results page
-	- update to include checkmarks representing selection and tag donuts all
-	inside a class='information'
-	- include question-level donut on the left-hand side of the results
-
 Student page
 	- adapt student.js to the use of the HTML5 dataset attributes in course-fragment-tags_table.js
+
+Course page
+	- add function to re-enable a class after it has been ended

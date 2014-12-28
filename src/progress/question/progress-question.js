@@ -34,7 +34,12 @@ function deleteButtonClicked() {
 }
 
 function tagButtonClicked() {
-	window.location.href = "https://" + _progressQuestionTagUrl + "?id=" + this.dataset.identifier;
+	var tagids = this.dataset.identifier.split(" ");
+	var getString = "?ids[]=" + tagids[0];
+	for(var i = 1; i < tagids.length; i++) {
+		getString = getString + "&ids[]=" + tagids[i];
+	}
+	window.location.href = "https://" + _progressQuestionTagUrl + getString;
 }
 
 addLoadEvent(progress_question_init);

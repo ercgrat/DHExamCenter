@@ -13,21 +13,23 @@ if(!$_SESSION['user']->logged_in)
     header("Location: https://". $_SERVER["HTTP_HOST"] . "/user_login.php");
     exit();
 }
-else if($_SESSION['user']->role < 1 || !isset($_GET["id"]) || !is_numeric($_GET["id"]))
+if(!isset($_GET["id"]) || !is_numeric($_GET["id"]))
 {
-    header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php");
+    header("Location: https://". $_SERVER["HTTP_HOST"] . "/index.php");
     exit();
 }
 
 $classid = $db_handle->real_escape_string($_GET["id"]);
-$admin_query = $db_handle->prepare("SELECT * FROM lasslinkscay WHERE seriduyay = ? AND lassidcay = ? AND oleray = 2");
-$admin_query->bind_param("ii", $_SESSION["user"]->id, $classid);
-$admin_query->execute();
-$admin_query->store_result();
-if($admin_query->num_rows() != 1)
-{
-    header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php");
-    exit();
+if($_SESSION["user"]->role != 2) {
+	$admin_query = $db_handle->prepare("SELECT * FROM lasslinkscay WHERE seriduyay = ? AND lassidcay = ? AND oleray > 0");
+	$admin_query->bind_param("ii", $_SESSION["user"]->id, $classid);
+	$admin_query->execute();
+	$admin_query->store_result();
+	if($admin_query->num_rows() != 1)
+	{
+		header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php");
+		exit();
+	}
 }
 
 $session_query = $db_handle->prepare("SELECT nsessioniyay FROM lassescay WHERE lassidcay = ?");

@@ -20,6 +20,7 @@ else if(!isset($_GET["id"]) || !is_numeric($_GET["id"]))
 }
 
 $questionid = $db_handle->real_escape_string($_GET["id"]);
+$_SESSION["question-questionid"] = $questionid;
 $courseid = $_SESSION["course-courseid"];
 
 $question_query = $db_handle->prepare("SELECT oursescay.ourseidcay FROM oursescay JOIN agstay ON agstay.ourseidcay = oursescay.ourseidcay JOIN aglinkstay ON agstay.agidtay = aglinkstay.agidtay WHERE aglinkstay.uestionidquay = ?");
@@ -31,7 +32,6 @@ $question_query->fetch();
 if($q_courseid != $courseid) {
 	header("Location:https://". $_SERVER["HTTP_HOST"] ."/student.php");
 }
-
 if($_SESSION['user']->role == 0)
 {
     $link_query = $db_handle->prepare("SELECT * FROM lasslinkscay JOIN lassescay ON lasslinkscay.lassidcay = lassescay.lassidcay JOIN oursescay ON oursescay.ourseidcay = lassescay.ourseidcay WHERE lasslinkscay.seriduyay = ? AND oursescay.ourseidcay = ? AND lassescay.nsessioniyay = 1");
@@ -46,6 +46,7 @@ if($_SESSION['user']->role == 0)
 
 $header = '<script type="text/javascript" src="question.js"></script>';
 $header .= '<link rel="stylesheet" type="text/css" href="course.css"/>';
+$header .= '<link rel="stylesheet" type="text/css" href="tag.css"/>';
 output_start($header, $_SESSION["user"]);
 
 $course_query = $db_handle->prepare("SELECT oursetitlecay FROM oursescay WHERE ourseidcay = ?");
@@ -66,11 +67,13 @@ $_SESSION["question-resourceid"] = $resourceid;
 
 echo <<<_BODY
     <h2><a class="title2" href="course.php?id=$courseid">$course_title</a></h2>
-    <h3>Edit Question</h3>
-    <form id="question_form">
-        <p id="question_warning" class="warning"></p>
-        <label>Question: <br/><p class="warning"></p><textarea id="question_textarea">$question_text</textarea></label>
-        <label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea">
+    <h3>Question Editor</h3>
+	<div>
+		<div id="edit_view">
+			<form id="question_form">
+				<p id="question_warning" class="warning"></p>
+				<label>Question: <br/><p class="warning"></p><textarea id="question_textarea">$question_text</textarea></label>
+				<label>Tags (comma delineated): <br/><p class="warning"></p><textarea id="tag_textarea">
 _BODY;
 
 $tag_query = $db_handle->prepare("SELECT agnametay FROM agstay AS tags WHERE EXISTS (SELECT * FROM aglinkstay WHERE uestionidquay = ? AND agidtay = tags.agidtay)");
@@ -131,13 +134,22 @@ _ANSWER;
 }
 
 echo <<<_BODY
-            </table>
-        </div>
-        <img src="add.png" id="adder" alt="[ADD ANSWER]"/>
-        <img src="minus.png" id="remover" alt="[REMOVE ANSWER]"/>
-        <label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea">$explanation</textarea></label>
-    </form>
-    <p><button id="question_button">Save Question</button> <span></span></p>
+					</table>
+				</div>
+				<img src="add.png" id="adder" alt="[ADD ANSWER]"/>
+				<img src="minus.png" id="remover" alt="[REMOVE ANSWER]"/>
+				<label>Explanation (seen after submission of answers): <br/><textarea id="explanation_textarea">$explanation</textarea></label>
+			</form>
+			<p><button id="question_button">Save Question</button> <span></span></p>
+		</div>
+		<div id="preview_view">
+			<h4>Preview:</h4>
+			<div>
+			</div>
+			<p><button id="edit_button">Edit Question</button></p>
+		</div>
+	</div>
+    
 _BODY;
 
 output_end();

@@ -12,10 +12,24 @@ function progress_init() {
 			rect.addEventListener("mouseout", mousedOutOfBar, true);
 		}
 	}
+	
+	var donutcharts = document.getElementsByClassName("donut_chart");
+	for(var i = 0; i < donutcharts.length; i++) {
+		donut = donutcharts[i];
+		if(donut.getAttribute('data-identifier') != "") {
+			donut.parentNode.addEventListener("click", clickedDonut, true);
+			donut.parentNode.style.cursor = "pointer";
+		}
+	}
 }
 
 function clickedBar() {
-	window.location.href = "https://" + _progressQuestionUrl + "?id=" + this.dataset.identifier;
+	window.location.href = "https://" + _progressQuestionUrl + "?id=" + this.getAttribute("data-identifier") + "&classid=" + this.parentNode.parentNode.getAttribute("data-identifier");
+}
+
+function clickedDonut() {
+	var donut = this.getElementsByTagName("svg")[0];
+	window.location.href = "https://" + _progressTagUrl + "?ids[]=" + donut.dataset.identifier;
 }
 
 function mousedOverBar() {

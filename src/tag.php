@@ -12,13 +12,17 @@ if(!$_SESSION['user']->logged_in)
     header("Location: https://". $_SERVER["HTTP_HOST"] . "/user_login.php");
     exit();
 }
-else if(!isset($_POST["tagids"]) || !isset($_SESSION["course-courseid"]))
+else if((!isset($_POST["tagids"]) && !isset($_GET["ids"])) || !isset($_SESSION["course-courseid"]))
 {
     header("Location: https://". $_SERVER["HTTP_HOST"] ."/index.php");
     exit();
 }
 
-$tagids = explode(',', $db_handle->real_escape_string($_POST["tagids"]));
+if(isset($_POST["tagids"])) {
+	$tagids = explode(',', $_POST["tagids"]);
+} else {
+	$tagids = $_GET["ids"];
+}
 $tag_names = array();
 if(count($tagids) > 1 || (count($tagids) == 1 && $tagids[0] != "")) {
 	for($i = 0; $i < count($tagids); $i++) {
@@ -90,75 +94,8 @@ while($id_query->fetch())
     echo "<input type='hidden' value='$questionid'/>";
     echo "<img class='delete' src='delete.png' alt='DELETE'/>";
 
-    $question_query = $db_handle->prepare("SELECT uestiontextquay, rderoyay, esourceidray, xplanationeyay FROM uestionsquay WHERE uestionidquay = ?");
-    $question_query->bind_param("i", $questionid);
-    $question_query->execute();
-    $question_query->store_result();
-    $question_query->bind_result($question_text, $order, $resourceid, $explanation);
-    $question_query->fetch();
-    $question_text = string_with_space_preserved($question_text);
-    echo "<p>QUESTION: $question_text</p>";
-    
-    $tags_query = $db_handle->prepare("SELECT agidtay FROM aglinkstay WHERE uestionidquay = ?");
-    $tags_query->bind_param("i", $questionid);
-    $tags_query->execute();
-    $tags_query->store_result();
-    $tags_query->bind_result($qtagid);
-    
-    $num_tags = $tags_query->num_rows();
-    $current_tag = 0;
-    echo '<p class="details">TAGS: ';
-    while($tags_query->fetch())
-    {
-        $current_tag++;
-        $tagname_query = $db_handle->prepare("SELECT agnametay FROM agstay WHERE agidtay = ?");
-        $tagname_query->bind_param("i", $qtagid);
-        $tagname_query->execute();
-        $tagname_query->store_result();
-        $tagname_query->bind_result($qtagname);
-        $tagname_query->fetch();
-        echo "<a class='title3' href=\"tag.php?id=$qtagid\">$qtagname</a>";
-        if($current_tag < $num_tags) { echo ", "; }
-    }
-    echo '</p>';
-    
-    $resource_query = $db_handle->prepare("SELECT esourcenameray, inklay FROM esourcesray WHERE esourceidray = ?");
-    $resource_query->bind_param("i", $resourceid);
-    $resource_query->execute();
-    $resource_query->store_result();
-    $resource_query->bind_result($resource_name, $resource_link);
-    $resource_query->fetch();
-    if(!isset($resource_name)) { $resource_name = "N/A"; }
-    
-    echo "<p class='details'>RESOURCE: <a href\"$resource_link\">$resource_name</a></p>";
-    
-    if($order) { $order = "ORDERED"; }
-    else { $order = "UNORDERED"; }
-    echo "<p class='details'>$order ANSWERS</p>";
-    
-    echo "<ul class='answer_list'>";
-    $answer_query = $db_handle->prepare("SELECT nswer_textayay, orrectcay FROM nswersayay WHERE uestionidquay = ? ORDER BY nsweridayay");
-    $answer_query->bind_param("i", $questionid);
-    $answer_query->execute();
-    $answer_query->store_result();
-    $answer_query->bind_result($answer_text, $correct);
-    while ($answer_query->fetch())
-    {
-        $answer_text = string_with_space_preserved($answer_text);
-        if($correct == 1)
-        {
-            $img = "<img src='correct.png' alt='RIGHT: '/>";
-        }
-        else
-        {
-            $img = "<img src='incorrect.png' alt='WRONG: '/>";
-        }
-        echo "<li>$img $answer_text</li>";
-    }
-    echo "</ul>";
-    
-    $explanation = string_with_space_preserved($explanation);
-    echo "<p>EXPLANATION: $explanation</p>";
+    $_SESSION["question-questionid"] = $questionid;
+	include "question-fragment-preview.php";
     
     echo "</div>";
 }

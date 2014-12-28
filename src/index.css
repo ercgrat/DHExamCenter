@@ -68,7 +68,7 @@ a.title3 {
 
 #content-wrapper {
     position:relative;
-    overflow:auto;
+    overflow:hidden;
     min-height:50px;
 }
 #menu, #content {
@@ -220,6 +220,9 @@ form label {
 }
 div.content_section {
 	margin-bottom:1px;
+}
+a.horizontal_item {
+	color:black;
 }
 li.horizontal_item {
 	margin:10px;

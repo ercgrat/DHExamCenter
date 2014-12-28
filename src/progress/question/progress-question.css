@@ -4,6 +4,12 @@ svg {
 	height:70px;
 }
 
+p.question_text {
+	display:inline;
+	height:80px;
+	line-height:80px;
+}
+
 td, th{
 	min-width: 50px;
 	text-align: center;

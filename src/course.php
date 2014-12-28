@@ -33,9 +33,10 @@ if($_SESSION['user']->role == 0)
     }
 }
 
-$header = '<script type="text/javascript" src="course.js"></script>';
-$header.= '<script type="text/javascript" src="question.js"></script>';
-$header.= '<script type="text/javascript" src="course-fragment-tags_table.js"></script>';
+$header = '<script src="course.js"></script>';
+$header.= '<script src="question.js"></script>';
+$header.= '<script src="course-fragment-tags_table.js"></script>';
+$header.= '<script src="course-fragment-tag_presentation_selector.js"></script>';
 $header.= '<link rel="stylesheet" type="text/css" href="course.css"/>';
 output_start($header, $_SESSION["user"]);
 
@@ -117,13 +118,17 @@ echo <<<_BODY2
     <h3>Corpus</h3>
     <h4>Current Tags</h4>
     <p>Search through the question corpus by selecting any number of tags.</p>
-    <div id="tags_table">
+    <div id="tag_presentation_selector">
 _BODY2;
+
+require_once "course-fragment-tag_presentation_selector.php";
+
+echo '</div> <div id="tags_table">';
 
 require_once "course-fragment-tags_table.php";
 echo <<<_BODY3
-		<button id="tags_button" class="submit_type" data-courseid="$courseid">Search Questions</button>
 	</div>
+	<button id="tags_button" class="submit_type" data-courseid="$courseid">Search Questions</button>
 _BODY3;
 
 output_end();

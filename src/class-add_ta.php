@@ -5,7 +5,7 @@ require_once "login.php";
 session_start();
 session_regenerate_id();
 
-if(!$_SESSION["user"]->logged_in || $_SESSION["user"]->role < 1 || !isset($_SESSION["class-classid"]) || !isset($_GET["id"]) || !is_numeric($_GET["id"]))
+if(!$_SESSION["user"]->logged_in || !isset($_SESSION["class-classid"]) || !isset($_GET["id"]) || !is_numeric($_GET["id"]))
 {
     exit();
 }

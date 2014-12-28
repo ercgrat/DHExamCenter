@@ -23,3 +23,7 @@
 #adder {
 	margin-left:30px;
 }
+
+#preview_view {
+	display:none;
+}

@@ -13,6 +13,14 @@ function question_init()
     remover.onmouseup = release;
     
     document.getElementById("question_button").onclick = add_question;
+	if(document.getElementById("edit_button")) {
+		document.getElementById("edit_button").onclick = edit_question;
+	}
+}
+
+function edit_question() {
+	document.getElementById("preview_view").style.display = "none";
+	document.getElementById("edit_view").style.display = "block";
 }
 
 function add_question()
@@ -178,7 +186,9 @@ function add_question()
                 }
                 else
                 {
-                    document.getElementById("question_button").nextElementSibling.innerHTML = "Question saved.";
+                    document.getElementById("edit_view").style.display = "none";
+					load_preview();
+					document.getElementById("preview_view").style.display = "block";
                 }
             }
         }
@@ -190,6 +200,17 @@ function add_question()
         document.getElementById("question_warning").innerHTML = "Please correct the following issues:";
         document.getElementById("question_button").nextElementSibling.innerHTML = "";
     }
+}
+
+function load_preview() {
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if(req.readyState == 4 && req.status == 200) {
+			document.getElementById("preview_view").getElementsByTagName("div")[0].innerHTML = req.responseText;
+		}
+	}
+	req.open("GET", "question-fragment-preview.php", false);
+	req.send();
 }
 
 function add_answer()
@@ -234,7 +255,7 @@ function remove_answer()
     }
     else
     {
-        document.getElementById("question_warning").innerHTML = "Question must have at least two answers!";
+        alert("Question must have at least two answers!");
     }
 }
 

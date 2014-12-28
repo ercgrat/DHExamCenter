@@ -2,14 +2,11 @@ ul.correction_list {
     margin-left:30px;
 }
 
-li.selected {
-    
-}
 li.unselected {
     list-style:none;
 }
 div.question_header {
-	margin-left:25px;
+	margin-left:50px;
 	background-color: #C54B3F;
     position:relative;
 }
@@ -23,18 +20,29 @@ div.question_body {
     position:relative;
     margin-bottom:30px;
 }
+div.question_body div.question_body {
+	margin-left:100px;
+}
 
 .explanation {
     font-weight:bold;
 }
 
-img.correction {
-    position:absolute;
-    left:-10px;
-}
 img.correction_indicator {
     position:absolute;
     width:25px;
     left:-30px;
     top:0px;
+}
+
+div.question_body svg {
+	position:absolute;
+	top:0px;
+	left:-60px;
+	width:70px;
+	height:70px;
+}
+
+table tr td:nth-child(1), table tr td:nth-child(2) {
+	text-align:center;
 }

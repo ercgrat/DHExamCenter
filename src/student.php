@@ -48,7 +48,7 @@ if($ta_query->num_rows() > 0)
         $class_query->bind_result($courseid, $insession, $classname);
         $class_query->fetch();
         
-        $class = array($courseid, $insession, $classname);
+        $class = array($courseid, $insession, $classname, $classid);
         array_push($classes, $class);
     }
     
@@ -59,6 +59,7 @@ if($ta_query->num_rows() > 0)
         $courseid = $class[0];
         $insession = $class[1];
         $classname = $class[2];
+		$classid = $class[3];
 		if($class_count % 2 == 0) {
 			$row_style = "variation1";
 		} else {
@@ -74,11 +75,11 @@ if($ta_query->num_rows() > 0)
         
         if($insession == 1)
         {
-            echo "<tr class='$row_style'><td><a class='title2' href='https://$root/course.php?id=$courseid'>$course_title</a></td><td>$classname</td></tr>";
+            echo "<tr class='$row_style'><td><a class='title2' href='https://$root/course.php?id=$courseid'>$course_title</a></td><td><a class='title2' href='https://$root/class.php?id=$classid'>$classname</a></td></tr>";
         }
         else
         {
-            echo "<tr class='$row_style'><td><span class='disabled'>$course_title</span></td><td><span class='disabled'>$classname <span class='note'>(ended)</span></span></td></tr>";
+            echo "<tr class='$row_style'><td><a class='title2' href='https://$root/course.php?id=$courseid'>$course_title</a></td><td><span class='disabled'>$classname <span class='note'>(ended)</span></span></td></tr>";
         }
 		$class_count++;
     }
@@ -117,7 +118,7 @@ if($course_query->num_rows() == 0) {
 				echo "<input name='classid' type='hidden' value='$classid'/>";
 				echo "</form>";
 			} else {
-				echo "<h4 class='disabled'>$class_name</h4>";
+				echo "<h4 class='disabled'>$course_title: $class_name (ended)</h4>";
 			}
 		}
 	}
