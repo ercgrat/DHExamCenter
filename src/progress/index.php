@@ -80,6 +80,7 @@ else
 
     while($course_query->fetch())
     {
+		$_SESSION["course-courseid"] = $courseid;
         echo "<div class='content_section'><h3>$course_title</h3>";
         
         $class_query = $db_handle->prepare("SELECT lassidcay, lassnamecay FROM lassescay WHERE ourseidcay = ?");

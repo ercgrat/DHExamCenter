@@ -50,6 +50,7 @@ while($tags_query->fetch())
 }
 $result .= '</p>';
 
+unset($resource_name);
 $resource_query = $db_handle->prepare("SELECT esourcenameray, inklay FROM esourcesray WHERE esourceidray = ?");
 $resource_query->bind_param("i", $resourceid);
 $resource_query->execute();

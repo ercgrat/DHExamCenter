@@ -29,7 +29,7 @@ function clickedBar() {
 
 function clickedDonut() {
 	var donut = this.getElementsByTagName("svg")[0];
-	window.location.href = "https://" + _progressTagUrl + "?ids[]=" + donut.dataset.identifier;
+	window.location.href = "https://" + _progressTagUrl + "?ids[]=" + donut.getAttribute("data-identifier");
 }
 
 function mousedOverBar() {

@@ -101,9 +101,11 @@ for($i = 0; $i < $num_questions; $i++)
                 $question_string .= "<tr><td><img src='incorrect.png' alt='CORRECT: '/></td><td></td><td>$answer_text</td></tr>";
             }
         }
-        $answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay, lassidcay) VALUES(?, ?, ?, ?, ?)");
-        $answer_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $answerid, $in_array, $classid);
-        $answer_results_query->execute();
+		if($user->username != "test_account") {
+			$answer_results_query = $db_handle->prepare("INSERT INTO nswerresultsayay(seriduyay, imestamptay, nsweridayay, electedsay, lassidcay) VALUES(?, ?, ?, ?, ?)");
+			$answer_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $answerid, $in_array, $classid);
+			$answer_results_query->execute();
+		}
     }
     
     $evaluation_string .= "<div class='question_header'>";
@@ -117,9 +119,11 @@ for($i = 0; $i < $num_questions; $i++)
 	if(strlen($explanation) > 0) { $evaluation_string .= "<p><span class='explanation'>Explanation:</span> $explanation</p>"; }
     $correct_count += $correct_tally;
     
-    $question_results_query = $db_handle->prepare("INSERT INTO uestionresultsquay(seriduyay, imestamptay, uestionidquay, orrectcay, lassidcay) VALUES(?, ?, ?, ?, ?)");
-    $question_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $questionid, $correct_tally, $classid);
-    $question_results_query->execute();
+	if($user->username != "test_account") {
+		$question_results_query = $db_handle->prepare("INSERT INTO uestionresultsquay(seriduyay, imestamptay, uestionidquay, orrectcay, lassidcay) VALUES(?, ?, ?, ?, ?)");
+		$question_results_query->bind_param("isiii", $_SESSION["user"]->id, $date, $questionid, $correct_tally, $classid);
+		$question_results_query->execute();
+	}
 	
 	$results_query = $db_handle->prepare("SELECT SUM(uestionresultsquay.orrectcay)/COUNT(uestionresultsquay.uestionidquay) AS 'ratio' FROM uestionresultsquay WHERE uestionidquay = ?");
 	$results_query->bind_param("i", $questionid);
@@ -127,7 +131,7 @@ for($i = 0; $i < $num_questions; $i++)
 	$results_query->store_result();
 	$results_query->bind_result($ratio);
 	$results_query->fetch();
-	$xml = "<root><object ratio='$ratio'>" . ($ratio*100)	. "% of students selected the correct value for this answer.</object></root>";
+	$xml = "<root><object ratio='$ratio'>" . ($ratio*100)	. "% of students correctly answered this question.</object></root>";
 	$doc = new DOMDocument();
 	$doc->loadXML($xml);
 	$donut = $xslt->transformToXml($doc);

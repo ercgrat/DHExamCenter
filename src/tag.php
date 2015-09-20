@@ -38,7 +38,7 @@ if(count($tagids) > 1 || (count($tagids) == 1 && $tagids[0] != "")) {
 		$access_query->store_result();
 		$access_query->bind_result($courseid, $tag_name);
 		$access_query->fetch();
-		if($courseid != $_SESSION["course-courseid"])
+		if($courseid != $_SESSION["course-courseid"] && $_SESSION["user"]->role != 2)
 		{
 			$courseid = $_SESSION["course-courseid"];
 			output_start("", $_SESSION["user"]);

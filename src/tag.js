@@ -45,7 +45,7 @@ function deselect_question ()
 {
     if(this.tagName == "A")
     {
-        var question = this.parentNode.parentNode;
+        var question = this.parentNode.parentNode.parentNode;
     }
     else
     {
@@ -56,7 +56,14 @@ function deselect_question ()
 
 function select_question ()
 {
-    var question = this.parentNode.parentNode;
+	if(this.tagName == "A")
+    {
+        var question = this.parentNode.parentNode.parentNode;
+    }
+    else
+    {
+        var question = this.parentNode;
+    }
     question.className += " hoverable";
 }
 
